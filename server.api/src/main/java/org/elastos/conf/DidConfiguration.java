@@ -12,9 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("did")
 public class DidConfiguration {
+    private String node;
     private String did;
     private String privateKey;
     private String publicKey;
+
+    public String getNode() {
+        return node;
+    }
+
+    public void setNode(String node) {
+        this.node = node;
+    }
 
     public String getDid() {
         return did;

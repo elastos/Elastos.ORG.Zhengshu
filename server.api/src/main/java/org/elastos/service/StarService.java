@@ -25,6 +25,11 @@ public class StarService {
     BlockAgentService blockAgentService;
 
     private ElaDidService didService = new ElaDidServiceImp();
+
+    public void initService(){
+        didService.setElaNodeUrl(didConfiguration.getNode());
+    }
+
     public String bless(String starName, String userName, String userId, String belssing) {
         if(StringUtils.isAnyBlank(starName, userName, userId, belssing)){
             logger.error("bless parameter has null");
