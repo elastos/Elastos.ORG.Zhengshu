@@ -1,0 +1,28 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+# src/main/resources/config.properties #
+src/main/resources/logback.xml
+config.properties
+.classpath
+.metadata/
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+.DS_Store
+logs/
+target/
+
+# Emacs
+*~
+.#*
+
+# Omni Graffle #
+*(Autosaved).graffle
+pom.xml.versionsBackup
+60

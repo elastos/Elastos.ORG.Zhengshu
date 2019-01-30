@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="APP_NAME" value="@efk.app_name@" />
+    <property name="LOG_LEVEL" value="@efk.log_level@" /> <!-- DEBUG,INFO,WARN,ERROR,FATAL -->
+    <conversionRule conversionWord="ipandhostname" converterClass="com.ela.blessing.star.common.config.LogIPConvert" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%-5level|%ipandhostname|[%thread]| %logger{50}| %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debugFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${APP_NAME}-log-debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%-5level|%ipandhostname|[%thread]| %logger{50}| %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="errorFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${APP_NAME}-log-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%-5level|%ipandhostname|[%thread]| %logger{50}| %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="warnFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${APP_NAME}-log-warn-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%-5level|%ipandhostname|[%thread]| %logger{50}| %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="infoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${APP_NAME}-log-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%-5level|%ipandhostname|[%thread]| %logger{50}| %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="debugFileAppender" level="DEBUG" addtivity="false">
+        <appender-ref ref="debugFileAppender"/>
+    </logger>
+    <logger name="errorFileAppender" level="ERROR" addtivity="false">
+        <appender-ref ref="errorFileAppender"/>
+    </logger>
+    <logger name="warnFileAppender" level="WARN" addtivity="false">
+        <appender-ref ref="warnFileAppender"/>
+    </logger>
+    <logger name="infoFileAppender" level="INFO" addtivity="false">
+        <appender-ref ref="infoFileAppender"/>
+    </logger>
+
+    <root level="${LOG_LEVEL}">
+    <!--<root level="trace">-->
+        <appender-ref ref="errorFileAppender"/>
+        <appender-ref ref="warnFileAppender"/>
+        <appender-ref ref="infoFileAppender"/>
+        <!--<appender-ref ref="debugFileAppender"/>-->
+        <!-- uncomment this if require kafka appender -->
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="kafkaAppender" />-->
+    </root>
+</configuration>
