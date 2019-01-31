@@ -9,9 +9,9 @@
 				<span>{{bless_list.content}}</span>
 			</div>
 		</div>
-		<div class="users">用户名为<span>{{datas.userNick}}</span>的用户为<span>{{datalist.name}}</span><br />送上了第 {{datas.blessingCount}} 份祝福</div>
+		<div class="users"><span>{{datas.userNick}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{datas.blessingCount}} 份爱的表白</div>
 		<div class="hash_code">
-			<p>祝福卡已在Elastos区块链上存正，hash为：</p>
+			<p>爱的表白已在<b>Elastos区块链</b>上雕刻，证书hash：</p>
 			<span class="code_num">{{datas.hash}}</span>
 		</div>
 		<div class="erweima">
@@ -21,9 +21,11 @@
 			<img src="../assets/images/logo.png" alt="" />
 		</div>
 		<div class="massage">
-			本证书由bitgame提供技术支持
-			<!--，<br />点此查看
-				<a href="http://www.gaex.com">更多好玩游戏</a>-->
+			<span>本证书由bitgame提供技术支持</span>
+			<!--<br />点此查看
+				<a href="https://play.fishchain.io/">bitgame更多</a>好玩内容-->
+			<br />
+			<a href="https://play.fishchain.io/">https://play.fishchain.io/</a>
 		</div>
 
 	</div>
@@ -56,8 +58,13 @@
 					correctLevel: QRCode.CorrectLevel.L //容错率，L/M/H
 				})
 			},
+			open() {
+				this.$message('请您截图分享');
+			},
 			shareFn() {
+				console.log(1111)
 				//this.WXConfig.wxShowMenu();
+				this.open();
 			}
 		},
 		mounted() {
@@ -115,6 +122,7 @@
 		word-wrap: break-word;
 		width: 100%;
 		min-height: 100%;
+		/*height: auto;*/
 		background: url(../assets/images/bg.png) no-repeat;
 		background-size: 100% 100%;
 		padding-top: 1rem;
@@ -124,21 +132,29 @@
 		position: relative;
 		.share_btn {
 			color: #fff;
-			font-size: 1.5rem;
+			font-size: 1.3rem;
 			padding: 0 1rem;
 			font-weight: 300;
-			float: right;
+			/* float: right; */
+			-webkit-box-sizing: border-box;
 			box-sizing: border-box;
+			/* position: relative; */
+			/* top: .3rem; */
+			width: 100%;
+			display: inline-block;
+			text-align: right;
 		}
 		.share_title {
 			text-align: center;
 			font-weight: 300;
 			color: #fff;
 			margin: 0;
+			-webkit-box-sizing: border-box;
 			box-sizing: border-box;
 			font-size: 1.5rem;
 			position: absolute;
 			left: 50%;
+			top: 1rem;
 			margin-left: -4rem;
 			display: inline-block;
 		}
@@ -146,7 +162,8 @@
 			width: 92%;
 			margin: 0 auto;
 			position: relative;
-			padding-top: 2.8rem;
+			padding-top: 0.8rem;
+			-webkit-box-sizing: border-box;
 			box-sizing: border-box;
 			.blessings_box {
 				position: absolute;
@@ -191,6 +208,9 @@
 			p {
 				margin: 0;
 				padding: .2rem 0;
+				b{
+					color:cornflowerblue;
+				}
 			}
 			.code_num {
 				width: 100%;
@@ -208,7 +228,7 @@
 		}
 		.address {
 			width: 100%;
-			padding: 1rem;
+			padding: .8rem;
 			box-sizing: border-box;
 			text-align: center;
 			img {
@@ -217,13 +237,28 @@
 			}
 		}
 		.massage {
-			color: #fff;
+			color: #44249D;
 			font-weight: 100;
-			padding-top: .5rem;
-			position: absolute;
-			bottom: .8rem;
-			left: 50%;
-			margin-left: -6.5rem;
+			padding: .8rem 0;
+			/*position: absolute;
+			bottom: .8rem;*/
+			/*left: 50%;
+			margin-left: -6.5rem;*/
+			box-sizing: border-box;
+			width: 100%;
+			text-align: center;
+			span {
+				color: #fff;
+				font-weight: 400;
+			}
+			a {
+				color: #42249E;
+				width: 100%;
+				text-align: center;
+				display: inline-block;
+				font-weight: 400;
+				padding-top: .5rem;
+			}
 			/*a {
 				color: rgb(229, 139, 240);
 			}*/

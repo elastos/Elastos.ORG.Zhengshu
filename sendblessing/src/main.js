@@ -13,12 +13,37 @@ Vue.config.productionTip = false;
 //Vue.prototype.WXConfig =WXConfig;
 Vue.use(Element)
 /* eslint-disable no-new */
-
-	new Vue({
-		el: '#app',
-		router,
-		components: {
-			App
-		},
-		template: '<App/>'
-	})
+//router.beforeEach((to, from, next) => {
+//	
+//	setTimeout(() => {
+//			var _hmt = _hmt || [];
+//			(function() {
+//				var hm = document.createElement("script");
+//				hm.src = "https://hm.baidu.com/hm.js?d2a67c3ea8b64f1b9da8676be29f98aa";
+//				var s = document.getElementsByTagName("script")[0];
+//				s.parentNode.insertBefore(hm, s);
+//			})();
+//	}, 0)
+//});
+router.afterEach( ( to, from, next ) => {
+ setTimeout(()=>{
+   var _hmt = _hmt || [];
+   (function() {
+    //每次执行前，先移除上次插入的代码
+    document.getElementById('baidu_tj') && document.getElementById('baidu_tj').remove();
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?d2a67c3ea8b64f1b9da8676be29f98aa";
+    hm.id = "baidu_tj"
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+   })();
+ },0);
+} );
+new Vue({
+	el: '#app',
+	router,
+	components: {
+		App
+	},
+	template: '<App/>'
+})

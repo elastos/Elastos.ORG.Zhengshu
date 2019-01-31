@@ -69,12 +69,16 @@
 				this.$router.push({
 					name: 'details',
 					query: {
-						id: item.id
+						id: item.id,
 					}
 				})
 			}
 		},
+		mounted() {
+
+		},
 		created() {
+
 			this.datas = datas.datas.list;
 
 		}
@@ -139,7 +143,7 @@
 			left: 50%;
 			margin-left: -42.5%;
 			p {
-				 font-size: 1rem;
+				font-size: 1rem;
 				text-align: center;
 			}
 		}

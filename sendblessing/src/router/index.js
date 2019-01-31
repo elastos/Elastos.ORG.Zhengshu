@@ -6,8 +6,14 @@ Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
+	
   routes: [
     {
+		path: '/',
+		component: _import('index'),
+		hidden: true
+	},
+	{
 		path: '/index',
 		component: _import('index'),
 		hidden: true
