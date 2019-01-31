@@ -83,9 +83,9 @@
 //					name: 'details',
 //					query: {
 //						id: item.id,
-//						openid: 'oK',
+//						openid: 'oKd',
 //						avatar: 'https%253A%252F%252Fwx.qlogo.cn%252Fmmopen%252Fvi_32%252FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%252F132',
-//						nickname: 'li008'
+//						nickname: 'li00d8'
 //					}
 //				})
 			}

@@ -5,14 +5,14 @@
 		<div class="star_card">
 			<img :src="datalist.cardUrl" />
 			<div class="blessings_box">
-				<span class="blessings">{{datass.userNick}}:</span>
-				<span>{{bless_list.content}}</span>
+				<span class="blessings">{{$route.query.nickname}}:</span>
+				<span>{{$route.query.txt}}</span>
 			</div>
 		</div>
-		<div class="users"><span>{{datass.userNick}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{datass.blessingCount}} 份爱的表白</div>
+		<div class="users"><span>{{$route.query.nickname}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{$route.query.blessingcount}} 份爱的表白</div>
 		<div class="hash_code">
 			<p>爱的表白已在<b>Elastos区块链</b>上雕刻，证书hash：</p>
-			<span class="code_num">{{datass.hash}}</span>
+			<span class="code_num">{{$route.query.hash}}</span>
 		</div>
 		<div class="erweima">
 			<div id="qrCode" ref="qrCodeDiv"></div>
@@ -50,6 +50,7 @@
 		},
 		methods: {
 			bindQRCode: function() {
+				console.log(window.location.href)
 				new QRCode(this.$refs.qrCodeDiv, {
 					text: window.location.href,
 					width: 150,
@@ -86,6 +87,13 @@
 			//			});
 		},
 		created() {
+			console.log(this.$route.query)
+			//			if(this.$route.query.data !=''){
+			//				console.log(1111)
+			//				this.datass=this.$route.query.data
+			//			}else{
+			//				this.datass = store.state.datas;
+			//			}
 			this.datass = store.state.datas;
 			this.bless_list = store.state.txt;
 			let that = this;
@@ -96,11 +104,11 @@
 				}
 
 			});
-//			service.Bus.$on('datasfn', function(data) {
-//				console.log(data)
-//				that.datass = data;
-//				console.log(that.datass)
-//			});
+			//			service.Bus.$on('datasfn', function(data) {
+			//				console.log(data)
+			//				that.datass = data;
+			//				console.log(that.datass)
+			//			});
 			let startId = this.$route.query.id;
 			datas.datas.list.forEach((item) => {
 				if(item.id == startId) {
@@ -216,8 +224,8 @@
 			p {
 				margin: 0;
 				padding: .2rem 0;
-				b{
-					color:cornflowerblue;
+				b {
+					color: cornflowerblue;
 				}
 			}
 			.code_num {
@@ -258,6 +266,8 @@
 			span {
 				color: #fff;
 				font-weight: 400;
+				width: 100%;
+				display: inline-block;
 			}
 			a {
 				color: #42249E;
