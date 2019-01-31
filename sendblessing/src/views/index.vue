@@ -76,6 +76,15 @@
 						nickname:this.query.nickname
 					}
 				})
+//				this.$router.push({
+//					name: 'details',
+//					query: {
+//						id: item.id,
+//						openid:'oKEe15IKRzv3aZ3yEWvDR3LxaQ4Y',
+//						avatar:'https%253A%252F%252Fwx.qlogo.cn%252Fmmopen%252Fvi_32%252FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%252F132',
+//						nickname:'lifayi2008'
+//					}
+//				})
 			}
 		},
 		mounted() {
