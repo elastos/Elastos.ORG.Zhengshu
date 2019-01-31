@@ -46,15 +46,20 @@ public class FansBlessServiceImpl implements FansBlessService {
     }
 
     @Override
-    public void saveStarBlessInfo(FansBless fansBless) {
+    public int saveStarBlessInfo(FansBless fansBless) {
 
-        fansBlessDAO.saveStarBless(fansBless);
+        return fansBlessDAO.saveStarBless(fansBless);
     }
 
     @Override
     public int getBlessingCountToday(String userIdentity){
 
         return fansBlessDAO.getBlessingCountToday(userIdentity);
+    }
+    @Override
+    public int getBlessingCountNew(int starId,int id){
+
+        return fansBlessDAO.getBlessingCountNew(starId,id);
     }
 
     @Override
