@@ -38,7 +38,7 @@
 					<div class="choice_title">
 						<img src="../assets/images/tip_left.png" />
 						<span>
-						选择祝福语
+						选择爱的表白
 					</span>
 						<img src="../assets/images/tip_right.png" />
 						<ul class="choose_btn">
@@ -92,8 +92,8 @@
 				userImg: '',
 				starbless: '',
 				bless_list: '',
-				openId:'111',
-				nickName:'2222'
+				openid: '111',
+				nickName: '2222'
 			}
 		},
 		methods: {
@@ -105,19 +105,19 @@
 				console.log(this.bless_list)
 			},
 			rankingList() {
-				console.log(11111)
 				let data = {};
+				//let openid = this.query.openId;
 				var datas = new Object();
-				datas.openId = this.query.openId;
-				datas.nickName = this.query.nickName;
+				datas.openId = this.query.openid;
+				datas.nickName = this.query.nickname;
 				datas.starId = this.ids;
 				datas.starName = this.detailsList.name;
 				datas.emoticonId = "0";
 				datas.blessingContent = "11111";
 				var jon = JSON.stringify(datas);
-				console.log(this.openId)
+				console.log(datas)
 				//var url = 'http://192.168.1.124:9015/api/blessing_save';
-				let url = api+'/api/blessing_save';
+				let url = api + '/api/blessing_save';
 				//console.log(urls)
 				console.log(url)
 				axios.post(
@@ -131,30 +131,35 @@
 					let datas = result.data.data;
 					service.Bus.$emit('datasfn', datas);
 					service.Bus.$emit('blessList', this.bless_list);
-				})
-				this.$router.push({
-					name: "share",
-					query: {
-						id: this.ids
+					if(result.data.code == 0) {
+						this.$router.push({
+							name: "share",
+							query: {
+								id: this.ids
+							}
+						})
 					}
-				})
+				}).catch(function(error) {
+					console.log(error);
+				});
 
 			}
 		},
 		mounted() {
-			
-//			service.getDatas().then(data=>{
-//				console.log(data)
-//			})
+
+			//			service.getDatas().then(data=>{
+			//				console.log(data)
+			//			})
 		},
 		created() {
-			this.userImg = decodeURIComponent(this.$route.query.avatar)
-			console.log()
+			this.userImg = decodeURIComponent(this.$route.query.avatar);
+			console.log(this.userImg)
+			//console.log(this.$route.query.avatar)
 			var that = this;
 			this.query = this.$route.query;
 			console.log(this.query)
 			let data = {}
-			var url = api+'/api/blessing_content_info';
+			var url = api + '/api/blessing_content_info';
 			axios.post(
 				url,
 				data, {
@@ -175,7 +180,7 @@
 			console.log(jon)
 			//			let data ={"starId":this.id};
 			//			console.log(data)
-			var url = api+'/api/star_bless_info';
+			var url = api + '/api/star_bless_info';
 			axios.post(
 				url,
 				jon, {
@@ -273,8 +278,8 @@
 			border-radius: 1rem;
 			-webkit-box-shadow: rgb(80, 86, 240) 0px 0px 50px inset;
 			box-shadow: rgb(80, 86, 240) 0px 0px 50px inset;
-			position:relative;
-			top:.5rem;
+			position: relative;
+			top: .5rem;
 			/* position: relative; */
 			/* top: 15rem; */
 			/* left: 50%; */
@@ -326,8 +331,7 @@
 				.star {
 					dt {
 						float: left;
-						img {
-						}
+						img {}
 					}
 					dd {}
 				}
@@ -363,7 +367,7 @@
 							align-items: center;
 							color: #fff;
 							font-weight: 300;
-							font-size:15px;
+							font-size: 15px;
 							line-height: 1.8rem;
 							span {
 								width: .3rem;
@@ -413,8 +417,8 @@
 			font-weight: 500;
 			font-size: 18px;
 			border: none;
-			position:relative;
-			top:.5rem;
+			position: relative;
+			top: .5rem;
 		}
 	}
 </style>
