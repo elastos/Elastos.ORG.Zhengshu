@@ -64,6 +64,7 @@
 	import service from './service';
 	import axios from 'axios'
 	import datas from '../data/data';
+	import api from "../api/";
 	export default {
 		name: 'details',
 		data() {
@@ -115,7 +116,10 @@
 				datas.blessingContent = "11111";
 				var jon = JSON.stringify(datas);
 				console.log(this.openId)
-				var url = 'http://192.168.1.124:9015/api/blessing_save';
+				//var url = 'http://192.168.1.124:9015/api/blessing_save';
+				let url = api+'/api/blessing_save';
+				//console.log(urls)
+				console.log(url)
 				axios.post(
 					url,
 					datas, {
@@ -138,7 +142,10 @@
 			}
 		},
 		mounted() {
-
+			
+//			service.getDatas().then(data=>{
+//				console.log(data)
+//			})
 		},
 		created() {
 			this.userImg = decodeURIComponent(this.$route.query.avatar)
@@ -147,7 +154,7 @@
 			this.query = this.$route.query;
 			console.log(this.query)
 			let data = {}
-			var url = 'http://192.168.1.124:9015/api/blessing_content_info';
+			var url = api+'/api/blessing_content_info';
 			axios.post(
 				url,
 				data, {
@@ -168,7 +175,7 @@
 			console.log(jon)
 			//			let data ={"starId":this.id};
 			//			console.log(data)
-			var url = 'http://192.168.1.124:9015/api/star_bless_info';
+			var url = api+'/api/star_bless_info';
 			axios.post(
 				url,
 				jon, {
