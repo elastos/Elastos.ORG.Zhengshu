@@ -35,6 +35,7 @@
 	import QRCode from 'qrcodejs2';
 	import service from './service';
 	import datas from '../data/data';
+	import store from '../store'
 	export default {
 		name: '',
 		data() {
@@ -73,10 +74,11 @@
 				//alert(11)
 				this.bindQRCode();
 			})
-			let that = this;
+			var that = this;
 			service.Bus.$on('datasfn', function(data) {
+				console.log(data)
 				that.datass = data;
-				console.log(that.datas)
+				console.log(that.datass)
 			});
 			//			service.Bus.$on('blessList', function(data) {
 			//				that.bless_list = data;
@@ -84,6 +86,7 @@
 			//			});
 		},
 		created() {
+			this.datass = store.state.datas;
 			let that = this;
 			console.log(that.bless_list)
 			service.Bus.$on('blessList', function(data) {
@@ -92,7 +95,11 @@
 				}
 
 			});
-
+//			service.Bus.$on('datasfn', function(data) {
+//				console.log(data)
+//				that.datass = data;
+//				console.log(that.datass)
+//			});
 			let startId = this.$route.query.id;
 			datas.datas.list.forEach((item) => {
 				if(item.id == startId) {
@@ -132,8 +139,8 @@
 		position: relative;
 		.share_btn {
 			color: #fff;
-			font-size: 1.3rem;
-			padding: 0 1rem;
+			font-size: 1rem;
+			padding: .3rem 1rem 0 1rem;
 			font-weight: 300;
 			/* float: right; */
 			-webkit-box-sizing: border-box;

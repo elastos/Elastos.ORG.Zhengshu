@@ -65,6 +65,7 @@
 	import axios from 'axios'
 	import datas from '../data/data';
 	import api from "../api/";
+	import store from '../store'
 	export default {
 		name: 'details',
 		data() {
@@ -96,6 +97,11 @@
 				nickName: '2222'
 			}
 		},
+		 computed: {
+            msg(){
+                return store.state.testMsg;
+            }
+        },
 		methods: {
 			chooseFn(item, index) {
 				console.log(this.current)
@@ -113,7 +119,7 @@
 				datas.starId = this.ids;
 				datas.starName = this.detailsList.name;
 				datas.emoticonId = "0";
-				datas.blessingContent = "11111";
+				datas.blessingContent = this.starbless.blessing_count;
 				var jon = JSON.stringify(datas);
 				console.log(datas)
 				//var url = 'http://192.168.1.124:9015/api/blessing_save';
@@ -129,6 +135,7 @@
 					}
 				).then(result => {
 					let datas = result.data.data;
+					this.clickHandler(datas);
 					service.Bus.$emit('datasfn', datas);
 					service.Bus.$emit('blessList', this.bless_list);
 					if(result.data.code == 0) {
@@ -148,14 +155,20 @@
 			},
 			open(){
 				this.$message('提交失败');
-			}
+			},
+			clickHandler(data){
+                  store.commit('changeTestMsg', data);
+                console.log(store.state)
+            },
 		},
 		mounted() {
-
+		
+			
 			//			service.getDatas().then(data=>{
 			//				console.log(data)
 			//			})
 		},
+		store,
 		created() {
 			this.userImg = decodeURIComponent(this.$route.query.avatar);
    console.log(this.userImg)
