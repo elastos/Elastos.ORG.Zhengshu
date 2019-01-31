@@ -41,9 +41,8 @@
 </template>
 
 <script>
-	import service from './service'
 	import axios from 'axios';
-	import qs from 'qs'
+	import api from "../api/";
 	export default {
 		name: "",
 		data() {
@@ -61,7 +60,7 @@
 			//var datas = ;
 			console.log()
 			//console.log(data)
-			var url = 'http://192.168.1.124:9015/api/blessing_rank';
+			var url = api+'/api/blessing_rank';
 			axios.post(
 				url,
 				data, {
@@ -74,29 +73,7 @@
 				console.log(this.datas)
 			})
 
-			// do something })
-			//			service.starDatas().then(data =>{
-			//				console.log(data.data.data)
-			//			})
-			//			console.log(1111);
-			//			var starId=1;
-			//			axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-			//			axios({
-			//				method: 'post',
-			//				params: starId,
-			//				transformRequest: [function() {
-			//					return JSON.stringify(params)
-			//				}],
-			//				url: 'http://192.168.1.124:9015/api/star_bless_info'
-			//			}).then((res) => {
-			//				if(res.data.status == 200) {
-			//					// TODO:
-			//				} else {
-			//					console.log(res);
-			//				}
-			//			}).catch((res) => {
-			//				console.log(res);
-			//			})
+			
 		}
 	}
 </script>
