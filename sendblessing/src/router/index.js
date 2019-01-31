@@ -14,7 +14,7 @@ export default new Router({
 		hidden: true
 	},
 	{
-		path: '/index.html',
+		path: '/index',
 		component: _import('index'),
 		hidden: true
 	},
