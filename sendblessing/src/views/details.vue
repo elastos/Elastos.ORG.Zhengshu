@@ -58,6 +58,9 @@
 			雕刻祝福
 			</button>
 		</div>
+		<div class="address">
+			<img src="../assets/images/logo.png" alt="" />
+		</div>
 	</div>
 </template>
 <script>
@@ -97,17 +100,19 @@
 				nickName: '2222'
 			}
 		},
-		 computed: {
-            msg(){
-                return store.state.testMsg;
-            }
-        },
+		computed: {
+			msg() {
+				return store.state.testMsg;
+			}
+		},
 		methods: {
+
 			chooseFn(item, index) {
 				console.log(this.current)
 				this.current = index;
-				this.bless_list = item;
 
+				this.bless_list = item;
+				this.changeText(item);
 				console.log(this.bless_list)
 			},
 			rankingList() {
@@ -142,10 +147,11 @@
 						this.$router.push({
 							name: "share",
 							query: {
-								id: this.ids
+								id: this.ids,
+
 							}
 						})
-					}else{
+					} else {
 						this.open();
 					}
 				}).catch(function(error) {
@@ -153,17 +159,20 @@
 				});
 
 			},
-			open(){
+			open() {
 				this.$message('提交失败');
 			},
-			clickHandler(data){
-                  store.commit('changeTestMsg', data);
-                console.log(store.state)
-            },
+			changeText(data) {
+				store.commit('changeChildText', data);
+				console.log(store.state)
+			},
+			clickHandler(data) {
+				store.commit('changeTestMsg', data);
+				console.log(store.state)
+			},
 		},
 		mounted() {
-		
-			
+
 			//			service.getDatas().then(data=>{
 			//				console.log(data)
 			//			})
@@ -171,53 +180,53 @@
 		store,
 		created() {
 			this.userImg = decodeURIComponent(this.$route.query.avatar);
-   console.log(this.userImg)
-   //console.log(this.$route.query.avatar)
-   var that = this;
-   this.query = this.$route.query;
-   console.log(this.query)
-   let data = {}
-   var url = api + '/api/blessing_content_info';
-   axios.post(
-    url,
-    data, {
-     headers: {
-      'Content-Type': 'application/json;charse=UTF-8'
-     }
-    }
-   ).then(result => {
-    that.chooseList = result.data.data;
-    console.log(that.chooseList)
-   })
-   let id = this.$route.query.id;
-   this.ids = id;
+			console.log(this.userImg)
+			//console.log(this.$route.query.avatar)
+			var that = this;
+			this.query = this.$route.query;
+			console.log(this.query)
+			let data = {}
+			var url = api + '/api/blessing_content_info';
+			axios.post(
+				url,
+				data, {
+					headers: {
+						'Content-Type': 'application/json;charse=UTF-8'
+					}
+				}
+			).then(result => {
+				that.chooseList = result.data.data;
+				console.log(that.chooseList)
+			})
+			let id = this.$route.query.id;
+			this.ids = id;
 
-   var student = new Object();
-   student.starId = this.ids;
-   var jon = JSON.stringify(student);
-   console.log(jon)
-   //   let data ={"starId":this.id};
-   //   console.log(data)
-   var url = api + '/api/star_bless_info';
-   axios.post(
-    url,
-    jon, {
-     headers: {
-      'Content-Type': 'application/json;charse=UTF-8'
-     }
-    }
-   ).then(result => {
-    that.starbless = result.data.data;
-    console.log(that.starbless)
-   })
+			var student = new Object();
+			student.starId = this.ids;
+			var jon = JSON.stringify(student);
+			console.log(jon)
+			//   let data ={"starId":this.id};
+			//   console.log(data)
+			var url = api + '/api/star_bless_info';
+			axios.post(
+				url,
+				jon, {
+					headers: {
+						'Content-Type': 'application/json;charse=UTF-8'
+					}
+				}
+			).then(result => {
+				that.starbless = result.data.data;
+				console.log(that.starbless)
+			})
 
-   console.log(id)
-   datas.datas.list.forEach((item) => {
-    if(item.id == id) {
-     console.log(item)
-     this.detailsList = item
-    }
-   })
+			console.log(id)
+			datas.datas.list.forEach((item) => {
+				if(item.id == id) {
+					console.log(item)
+					this.detailsList = item
+				}
+			})
 
 		}
 
@@ -438,6 +447,15 @@
 			border: none;
 			position: relative;
 			top: .5rem;
+		}
+		.address {
+			position: absolute;
+			bottom: 0;
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			padding: .5rem 0;
+			box-sizing: border-box;
 		}
 	}
 </style>

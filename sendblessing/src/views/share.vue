@@ -87,6 +87,7 @@
 		},
 		created() {
 			this.datass = store.state.datas;
+			this.bless_list = store.state.txt;
 			let that = this;
 			console.log(that.bless_list)
 			service.Bus.$on('blessList', function(data) {

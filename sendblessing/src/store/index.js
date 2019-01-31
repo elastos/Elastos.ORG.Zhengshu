@@ -4,16 +4,17 @@ import Vuex from 'vuex';
 Vue.use(Vuex)
 
 const state = {
-	datas:''
+	datas:'',
+	txt:''
 }
 
 const mutations = {
     changeTestMsg(state, str){
         state.datas = str;
     },
-//  changeChildText(state, str){
-//      state = str;
-//  }
+    changeChildText(state, str){
+        state.txt = str;
+    }
 
 }
 
