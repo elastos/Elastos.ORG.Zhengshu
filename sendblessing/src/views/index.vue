@@ -34,6 +34,9 @@
 			<div class="footer">
 				<img src="../assets/images/indexbg_02.png" />
 			</div>
+			<div class="address">
+				<img src="../assets/images/logo.png" alt="" />
+			</div>
 		</div>
 	</keep-alive>
 </template>
@@ -46,7 +49,7 @@
 		data() {
 			return {
 				datas: '',
-				query:''
+				query: ''
 			}
 		},
 		methods: {
@@ -67,22 +70,22 @@
 				//					this.datas = result.data.data;
 				//					console.log(this.datas)
 				//				})
-				this.$router.push({
-					name: 'details',
-					query: {
-						id: item.id,
-						openid:this.query.openid,
-						avatar:this.query.avatar,
-						nickname:this.query.nickname
-					}
-				})
+								this.$router.push({
+									name: 'details',
+									query: {
+										id: item.id,
+										openid:this.query.openid,
+										avatar:this.query.avatar,
+										nickname:this.query.nickname
+									}
+								})
 //				this.$router.push({
 //					name: 'details',
 //					query: {
 //						id: item.id,
-//						openid:'oK',
-//						avatar:'https%253A%252F%252Fwx.qlogo.cn%252Fmmopen%252Fvi_32%252FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%252F132',
-//						nickname:'li008'
+//						openid: 'oK',
+//						avatar: 'https%253A%252F%252Fwx.qlogo.cn%252Fmmopen%252Fvi_32%252FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%252F132',
+//						nickname: 'li008'
 //					}
 //				})
 			}
@@ -133,6 +136,15 @@
 				width: 100%;
 				height: 100%;
 			}
+		}
+		.address {
+			position: absolute;
+			bottom: 0;
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			padding: .5rem 0;
+			box-sizing: border-box;
 		}
 		.title-images {
 			width: 84%;
