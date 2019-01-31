@@ -45,7 +45,8 @@
 		name: "",
 		data() {
 			return {
-				datas: ''
+				datas: '',
+				query:''
 			}
 		},
 		methods: {
@@ -70,6 +71,9 @@
 					name: 'details',
 					query: {
 						id: item.id,
+						openid:this.query.openid,
+						avatar:this.query.avatar,
+						nickname:this.query.nickname
 					}
 				})
 			}
@@ -78,7 +82,7 @@
 
 		},
 		created() {
-
+			this.query = this.$route.query;
 			this.datas = datas.datas.list;
 
 		}

@@ -153,53 +153,54 @@
 		},
 		created() {
 			this.userImg = decodeURIComponent(this.$route.query.avatar);
-			console.log(this.userImg)
-			//console.log(this.$route.query.avatar)
-			var that = this;
-			this.query = this.$route.query;
-			console.log(this.query)
-			let data = {}
-			var url = api + '/api/blessing_content_info';
-			axios.post(
-				url,
-				data, {
-					headers: {
-						'Content-Type': 'application/json;charse=UTF-8'
-					}
-				}
-			).then(result => {
-				that.chooseList = result.data.data;
-				console.log(that.chooseList)
-			})
-			let id = this.$route.query.id;
-			this.ids = id;
+   console.log(this.userImg)
+   //console.log(this.$route.query.avatar)
+   var that = this;
+   this.query = this.$route.query;
+   console.log(this.query)
+   let data = {}
+   var url = api + '/api/blessing_content_info';
+   axios.post(
+    url,
+    data, {
+     headers: {
+      'Content-Type': 'application/json;charse=UTF-8'
+     }
+    }
+   ).then(result => {
+    that.chooseList = result.data.data;
+    console.log(that.chooseList)
+   })
+   let id = this.$route.query.id;
+   this.ids = id;
 
-			var student = new Object();
-			student.starId = this.ids;
-			var jon = JSON.stringify(student);
-			console.log(jon)
-			//			let data ={"starId":this.id};
-			//			console.log(data)
-			var url = api + '/api/star_bless_info';
-			axios.post(
-				url,
-				jon, {
-					headers: {
-						'Content-Type': 'application/json;charse=UTF-8'
-					}
-				}
-			).then(result => {
-				that.starbless = result.data.data;
-				console.log(that.starbless)
-			})
+   var student = new Object();
+   student.starId = this.ids;
+   var jon = JSON.stringify(student);
+   console.log(jon)
+   //   let data ={"starId":this.id};
+   //   console.log(data)
+   var url = api + '/api/star_bless_info';
+   axios.post(
+    url,
+    jon, {
+     headers: {
+      'Content-Type': 'application/json;charse=UTF-8'
+     }
+    }
+   ).then(result => {
+    that.starbless = result.data.data;
+    console.log(that.starbless)
+   })
 
-			console.log(id)
-			datas.datas.list.forEach((item) => {
-				if(item.id == id) {
-					console.log(item)
-					this.detailsList = item
-				}
-			})
+   console.log(id)
+   datas.datas.list.forEach((item) => {
+    if(item.id == id) {
+     console.log(item)
+     this.detailsList = item
+    }
+   })
+
 		}
 
 	}
