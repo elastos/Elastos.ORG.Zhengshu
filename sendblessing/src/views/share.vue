@@ -5,14 +5,14 @@
 		<div class="star_card">
 			<img :src="datalist.cardUrl" />
 			<div class="blessings_box">
-				<span class="blessings">{{datas.userNick}}:</span>
+				<span class="blessings">{{datass.userNick}}:</span>
 				<span>{{bless_list.content}}</span>
 			</div>
 		</div>
-		<div class="users"><span>{{datas.userNick}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{datas.blessingCount}} 份爱的表白</div>
+		<div class="users"><span>{{datass.userNick}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{datass.blessingCount}} 份爱的表白</div>
 		<div class="hash_code">
 			<p>爱的表白已在<b>Elastos区块链</b>上雕刻，证书hash：</p>
-			<span class="code_num">{{datas.hash}}</span>
+			<span class="code_num">{{datass.hash}}</span>
 		</div>
 		<div class="erweima">
 			<div id="qrCode" ref="qrCodeDiv"></div>
@@ -39,7 +39,7 @@
 		name: '',
 		data() {
 			return {
-				datas: '111',
+				datass: '111',
 				datalist: '',
 				bless_list: {
 					content: '遇到悬崖就飞，喜欢什么就追。'
@@ -75,7 +75,7 @@
 			})
 			let that = this;
 			service.Bus.$on('datasfn', function(data) {
-				that.datas = data;
+				that.datass = data;
 				console.log(that.datas)
 			});
 			//			service.Bus.$on('blessList', function(data) {

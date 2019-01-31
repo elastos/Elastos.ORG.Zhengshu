@@ -138,11 +138,16 @@
 								id: this.ids
 							}
 						})
+					}else{
+						this.open();
 					}
 				}).catch(function(error) {
 					console.log(error);
 				});
 
+			},
+			open(){
+				this.$message('提交失败');
 			}
 		},
 		mounted() {
@@ -325,7 +330,7 @@
 						}
 						dd {
 							position: relative;
-							left: -1.3rem;
+							left: -.1rem;
 						}
 					}
 				}
