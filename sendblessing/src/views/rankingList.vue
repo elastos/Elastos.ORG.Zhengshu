@@ -1,6 +1,6 @@
 <template>
 	<div class="ranking">
-		<router-link to="/index" style="text-decoration:none;">
+		<router-link to="/" style="text-decoration:none;">
 			<div class="share_btn">
 				<i class="iconfont icon-zuo"></i>
 				<span>返回</span>
