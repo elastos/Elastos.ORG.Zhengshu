@@ -140,14 +140,21 @@
 					}
 				).then(result => {
 					let datas = result.data.data;
+					
 					this.clickHandler(datas);
 					service.Bus.$emit('datasfn', datas);
 					service.Bus.$emit('blessList', this.bless_list);
 					if(result.data.code == 0) {
+						
 						this.$router.push({
 							name: "share",
 							query: {
 								id: this.ids,
+								nickname:this.$route.query.nickname,
+								txt:store.state.txt.content,
+								hash:datas.hash,
+								blessingcount:datas.blessingCount
+								
 
 							}
 						})
