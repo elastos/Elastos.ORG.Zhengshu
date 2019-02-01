@@ -96,7 +96,7 @@
 				//let openid = this.query.openId;
 				var datas = new Object();
 				datas.openId = this.query.openid;
-				datas.nickName = this.nickname;
+				datas.nickName = this.$route.query.nickname;
 				datas.starId = this.ids;
 				datas.starName = this.detailsList.name;
 				datas.emoticonId = "0";
