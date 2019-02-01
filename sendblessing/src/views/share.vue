@@ -5,11 +5,11 @@
 		<div class="star_card">
 			<img :src="datalist.cardUrl" />
 			<div class="blessings_box">
-				<span class="blessings">{{$route.query.nickname}}:</span>
+				<span class="blessings">{{nickname}}:</span>
 				<span>{{$route.query.txt}}</span>
 			</div>
 		</div>
-		<div class="users"><span>{{$route.query.nickname}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{$route.query.blessingcount}} 份爱的表白</div>
+		<div class="users"><span>{{nickname}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{$route.query.blessingcount}} 份爱的表白</div>
 		<div class="hash_code">
 			<p>爱的表白已在<b>Elastos区块链</b>上雕刻，证书hash：</p>
 			<span class="code_num">{{$route.query.hash}}</span>
@@ -21,9 +21,7 @@
 			<img src="../assets/images/logo.png" alt="" />
 		</div>
 		<div class="massage">
-
-			<p>本证书由BIT.GAME提供技术支持</p>
-
+			<p style="font-size:0.8em">本证书由BIT.GAME提供技术支持</p>
 		</div>
 
 	</div>
@@ -43,7 +41,7 @@
 				bless_list: {
 					content: '遇到悬崖就飞，喜欢什么就追。'
 				},
-
+				nickname:''
 			}
 		},
 		methods: {
@@ -62,51 +60,21 @@
 				this.$message('请您截图分享');
 			},
 			shareFn() {
-				//console.log(1111)
-				//this.WXConfig.wxShowMenu();
 				this.open();
 			}
 		},
 		mounted() {
 			console.log()
 			this.$nextTick(function() {
-				//alert(11)
 				this.bindQRCode();
 			})
 			var that = this;
-			service.Bus.$on('datasfn', function(data) {
-				console.log(data)
-				that.datass = data;
-				console.log(that.datass)
-			});
-			//			service.Bus.$on('blessList', function(data) {
-			//				that.bless_list = data;
-			//				console.log(that.bless_list)
-			//			});
 		},
 		created() {
-			//console.log(this.$route.query)
-			//			if(this.$route.query.data !=''){
-			//				console.log(1111)
-			//				this.datass=this.$route.query.data
-			//			}else{
-			//				this.datass = store.state.datas;
-			//			}
+			this.nickname = decodeURIComponent(this.$route.query.nickname);
 			this.datass = store.state.datas;
 			this.bless_list = store.state.txt;
 			let that = this;
-			//console.log(that.bless_list)
-			service.Bus.$on('blessList', function(data) {
-				if(data != '') {
-					that.bless_list = data;
-				}
-
-			});
-			//			service.Bus.$on('datasfn', function(data) {
-			//				console.log(data)
-			//				that.datass = data;
-			//				console.log(that.datass)
-			//			});
 			let startId = this.$route.query.id;
 			datas.datas.list.forEach((item) => {
 				if(item.id == startId) {
