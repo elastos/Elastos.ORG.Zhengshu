@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `fans_bless`;
 
 CREATE TABLE `fans_bless` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_identity` varchar(20) NOT NULL DEFAULT '' COMMENT '用户标识',
+  `user_identity` varchar(100) NOT NULL DEFAULT '' COMMENT '用户标识',
   `user_nick` varchar(20) NOT NULL DEFAULT '' COMMENT '用户昵称',
   `star_id` int(11) NOT NULL DEFAULT '0' COMMENT '明星id',
   `star_name` varchar(20) NOT NULL DEFAULT '' COMMENT '明星姓名',
