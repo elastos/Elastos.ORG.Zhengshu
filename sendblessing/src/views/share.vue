@@ -64,51 +64,20 @@
 				this.$message('请您截图分享');
 			},
 			shareFn() {
-				//console.log(1111)
-				//this.WXConfig.wxShowMenu();
 				this.open();
 			}
 		},
 		mounted() {
 			console.log()
 			this.$nextTick(function() {
-				//alert(11)
 				this.bindQRCode();
 			})
 			var that = this;
-			service.Bus.$on('datasfn', function(data) {
-				console.log(data)
-				that.datass = data;
-				console.log(that.datass)
-			});
-			//			service.Bus.$on('blessList', function(data) {
-			//				that.bless_list = data;
-			//				console.log(that.bless_list)
-			//			});
 		},
 		created() {
-			//console.log(this.$route.query)
-			//			if(this.$route.query.data !=''){
-			//				console.log(1111)
-			//				this.datass=this.$route.query.data
-			//			}else{
-			//				this.datass = store.state.datas;
-			//			}
 			this.datass = store.state.datas;
 			this.bless_list = store.state.txt;
 			let that = this;
-			//console.log(that.bless_list)
-			service.Bus.$on('blessList', function(data) {
-				if(data != '') {
-					that.bless_list = data;
-				}
-
-			});
-			//			service.Bus.$on('datasfn', function(data) {
-			//				console.log(data)
-			//				that.datass = data;
-			//				console.log(that.datass)
-			//			});
 			let startId = this.$route.query.id;
 			datas.datas.list.forEach((item) => {
 				if(item.id == startId) {
