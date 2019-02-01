@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
 	datas:'',
-	txt:''
+	txt:'遇到悬崖就飞，喜欢什么就追。'
 }
 
 const mutations = {

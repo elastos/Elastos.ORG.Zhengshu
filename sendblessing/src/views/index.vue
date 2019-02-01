@@ -54,7 +54,6 @@
 		},
 		methods: {
 			rankingList() {
-				console.log(1111)
 			},
 			detailsFn(item) {
 				
@@ -71,10 +70,10 @@
 //					name: 'details',
 //					query: {
 //						id: item.id,
-//						openid: 'oKsd',
+//						openid: 'oK',
 //						avatar: 'https%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%2F132'
 //,
-//						nickname: 'li00sd8'
+//						nickname: '00ssdfsfdfsd8'
 //					}
 //				})
 			}
@@ -221,6 +220,7 @@
 				}
 				dd {
 					color: #fff;
+					
 				}
 			}
 		}

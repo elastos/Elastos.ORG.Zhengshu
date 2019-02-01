@@ -11,7 +11,7 @@
 				<span class="user">
 					<dl>
 						<dt><img :src="userImg"/></dt>
-						<dd>{{this.$route.query.nickname}}</dd>
+						<dd>{{nickname}}</dd>
 					</dl>
 				</span> TO
 				<span class="star">
@@ -65,16 +65,7 @@
 				name: "杨幂",
 				active: false,
 				current: 0,
-				chooseList: [{
-					"id": 1,
-					"text": "愿你越来越好"
-				}, {
-					"id": 2,
-					"text": "新年快乐"
-				}, {
-					"id": 3,
-					"text": "工作顺利，开开心心"
-				}, ],
+				chooseList: '',
 				detailsList: '',
 				ids: '',
 				query: {
@@ -83,9 +74,9 @@
 				},
 				userImg: '',
 				starbless: '',
-				bless_list: '',
+				bless_list: '遇到悬崖就飞，喜欢什么就追。',
 				openid: '111',
-				nickName: '2222'
+				nickname: ''
 			}
 		},
 		computed: {
@@ -96,29 +87,24 @@
 		methods: {
 
 			chooseFn(item, index) {
-				console.log(this.current)
 				this.current = index;
-
-				this.bless_list = item;
-				this.changeText(item);
-				console.log(this.bless_list)
+				this.bless_list = item.content;
+				this.changeText(item.content);
 			},
 			rankingList() {
 				let data = {};
 				//let openid = this.query.openId;
 				var datas = new Object();
 				datas.openId = this.query.openid;
-				datas.nickName = this.query.nickname;
+				datas.nickName = this.$route.query.nickname;
 				datas.starId = this.ids;
 				datas.starName = this.detailsList.name;
 				datas.emoticonId = "0";
-				datas.blessingContent = this.starbless.blessing_count;
+				datas.blessingContent = this.bless_list;
 				var jon = JSON.stringify(datas);
-				console.log(datas)
 				//var url = 'http://192.168.1.124:9015/api/blessing_save';
 				let url = api + '/api/blessing_save';
 				//console.log(urls)
-				console.log(url)
 				axios.post(
 					url,
 					datas, {
@@ -128,23 +114,23 @@
 					}
 				).then(result => {
 					let datas = result.data.data;
-					console.log(datas)
 					this.clickHandler(datas);
-					service.Bus.$emit('datasfn', datas);
-					service.Bus.$emit('blessList', this.bless_list);
+					//					service.Bus.$emit('datasfn', datas);
+					//					service.Bus.$emit('blessList', this.bless_list);
 					if(result.data.code == 0) {
 						this.$router.push({
 							name: "share",
 							query: {
 								id: this.ids,
-								nickname:this.$route.query.nickname,
-								txt:store.state.txt.content,
-								hash:datas.hash,
-								blessingcount:datas.blessingCount
-								
+								nickname: this.$route.query.nickname,
+								txt: store.state.txt,
+								hash: datas.hash,
+								blessingcount: datas.blessingCount
 
 							}
 						})
+					}else if(result.data.code == 1002){
+						this.opens();
 					} else {
 						this.open();
 					}
@@ -156,51 +142,43 @@
 			open() {
 				this.$message('提交失败');
 			},
+			opens() {
+				this.$message('每天最多只能送10次祝福哦！');
+			},
 			changeText(data) {
 				store.commit('changeChildText', data);
-				console.log(store.state)
 			},
 			clickHandler(data) {
 				store.commit('changeTestMsg', data);
-				console.log(store.state)
 			},
 		},
 		mounted() {
-
-			//			service.getDatas().then(data=>{
-			//				console.log(data)
-			//			})
 		},
 		store,
 		created() {
+			this.nickname = decodeURIComponent(this.$route.query.nickname);
 			this.userImg = decodeURIComponent(this.$route.query.avatar);
-			console.log(this.userImg)
-			//console.log(this.$route.query.avatar)
+			if(this.chooseList == '') {
+				let data = {}
+				var url = api + '/api/blessing_content_info';
+				axios.post(
+					url,
+					data, {
+						headers: {
+							'Content-Type': 'application/json;charse=UTF-8'
+						}
+					}
+				).then(result => {
+					that.chooseList = result.data.data;
+				})
+			}
 			var that = this;
 			this.query = this.$route.query;
-			console.log(this.query)
-			let data = {}
-			var url = api + '/api/blessing_content_info';
-			axios.post(
-				url,
-				data, {
-					headers: {
-						'Content-Type': 'application/json;charse=UTF-8'
-					}
-				}
-			).then(result => {
-				that.chooseList = result.data.data;
-				console.log(that.chooseList)
-			})
 			let id = this.$route.query.id;
 			this.ids = id;
-
 			var student = new Object();
 			student.starId = this.ids;
 			var jon = JSON.stringify(student);
-			console.log(jon)
-			//   let data ={"starId":this.id};
-			//   console.log(data)
 			var url = api + '/api/star_bless_info';
 			axios.post(
 				url,
@@ -211,13 +189,10 @@
 				}
 			).then(result => {
 				that.starbless = result.data.data;
-				console.log(that.starbless)
 			})
 
-			console.log(id)
 			datas.datas.list.forEach((item) => {
 				if(item.id == id) {
-					console.log(item)
 					this.detailsList = item
 				}
 			})
@@ -321,9 +296,16 @@
 						dt {
 							img {
 								border-radius: 50%;
-								border: 4px solid #533ABB;
+								border: 2px solid #533ABB;
 								width: 50%;
 							}
+						}
+						dd {
+							width: 50%;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							margin: 0;
 						}
 					}
 				}
@@ -332,6 +314,7 @@
 					text-align: center;
 					padding-top: .5rem;
 					box-sizing: border-box;
+					width: 50%;
 					dl {
 						margin: 0;
 						line-height: 2rem;
@@ -340,6 +323,7 @@
 						dt {
 							width: 33%;
 							float: left;
+							padding-top: .3rem;
 							img {
 								width: 70%;
 							}
@@ -355,7 +339,11 @@
 						float: left;
 						img {}
 					}
-					dd {}
+					dd {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
 				}
 			}
 			.choice_blessings {
@@ -425,10 +413,7 @@
 			background-image: linear-gradient(106deg, #FFDE7E, #FFF7B9);
 			width: 13rem;
 			height: 2.5rem;
-			/*position: absolute;*/
-			/* left: 50%; */
-			/* margin-left: -7.5rem; */
-			/* right: 0; */
+			
 			top: 5rem;
 			/* bottom: 0; */
 			margin: 0 auto;
@@ -443,12 +428,13 @@
 			top: .5rem;
 		}
 		.address {
-			position: absolute;
+			/*position: absolute;
 			bottom: 0;
-			display: inline-block;
+			display: inline-block;*/
 			width: 100%;
 			text-align: center;
 			padding: .5rem 0;
+			padding-top: 3rem;
 			box-sizing: border-box;
 		}
 	}
