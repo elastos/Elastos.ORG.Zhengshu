@@ -53,6 +53,8 @@ public class BlockAgentService {
         if ((int) msg.get("status") == 200) {
             return (String)msg.get("result");
         } else {
+            logger.error("Err: upChainData:" + msg.get("result"));
+            System.out.println("Err: upChainData:" + msg.get("result"));
             return null;
         }
     }
