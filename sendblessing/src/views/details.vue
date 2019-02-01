@@ -5,25 +5,13 @@
 		</div>
 		<div class="blessing_card">
 			<img :src="detailsList.cardUrl" />
-			<!--<div class="style_btn">
-				<span class="btn btn_left">
-				<img src="../assets/images/icon_left.png"/>
-				</span>
-				<span class="style_card">
-				<img :src="detailsList.styleUrl"/>
-			</span>
-				<span class="btn btn_right">
-				<img src="../assets/images/icon_right.png"/>
-			</span>
-
-			</div>-->
 		</div>
 		<div class="blessings">
 			<div class="blessings_top">
 				<span class="user">
 					<dl>
 						<dt><img :src="userImg"/></dt>
-						<dd>{{query.nickname}}</dd>
+						<dd>{{this.$route.query.nickname}}</dd>
 					</dl>
 				</span> TO
 				<span class="star">
@@ -140,12 +128,11 @@
 					}
 				).then(result => {
 					let datas = result.data.data;
-					
+					console.log(datas)
 					this.clickHandler(datas);
 					service.Bus.$emit('datasfn', datas);
 					service.Bus.$emit('blessList', this.bless_list);
 					if(result.data.code == 0) {
-						
 						this.$router.push({
 							name: "share",
 							query: {

@@ -21,7 +21,7 @@
 			<img src="../assets/images/logo.png" alt="" />
 		</div>
 		<div class="massage">
-			<span>本证书由bitgame提供技术支持</span>
+			<p>本证书由bitgame提供技术支持</p>
 			<!--<br />点此查看
 				<a href="https://play.fishchain.io/">bitgame更多</a>好玩内容-->
 			<br />
@@ -64,7 +64,7 @@
 				this.$message('请您截图分享');
 			},
 			shareFn() {
-				console.log(1111)
+				//console.log(1111)
 				//this.WXConfig.wxShowMenu();
 				this.open();
 			}
@@ -87,7 +87,7 @@
 			//			});
 		},
 		created() {
-			console.log(this.$route.query)
+			//console.log(this.$route.query)
 			//			if(this.$route.query.data !=''){
 			//				console.log(1111)
 			//				this.datass=this.$route.query.data
@@ -97,7 +97,7 @@
 			this.datass = store.state.datas;
 			this.bless_list = store.state.txt;
 			let that = this;
-			console.log(that.bless_list)
+			//console.log(that.bless_list)
 			service.Bus.$on('blessList', function(data) {
 				if(data != '') {
 					that.bless_list = data;
@@ -263,11 +263,11 @@
 			box-sizing: border-box;
 			width: 100%;
 			text-align: center;
-			span {
+			p {
+				width: 100%;
 				color: #fff;
 				font-weight: 400;
-				width: 100%;
-				display: inline-block;
+				margin:0;
 			}
 			a {
 				color: #42249E;

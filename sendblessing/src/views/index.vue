@@ -57,19 +57,7 @@
 				console.log(1111)
 			},
 			detailsFn(item) {
-				//				let data = {"starId":10}
-				//				var url = 'http://192.168.1.116:9015/api/star_bless_info';
-				//				axios.post(
-				//					url,
-				//					data, {
-				//						headers: {
-				//							'Content-Type': 'application/json;charse=UTF-8'
-				//						}
-				//					}
-				//				).then(result => {
-				//					this.datas = result.data.data;
-				//					console.log(this.datas)
-				//				})
+				
 								this.$router.push({
 									name: 'details',
 									query: {
@@ -83,9 +71,10 @@
 //					name: 'details',
 //					query: {
 //						id: item.id,
-//						openid: 'oKd',
-//						avatar: 'https%253A%252F%252Fwx.qlogo.cn%252Fmmopen%252Fvi_32%252FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%252F132',
-//						nickname: 'li00d8'
+//						openid: 'oKsd',
+//						avatar: 'https%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%2F132'
+//,
+//						nickname: 'li00sd8'
 //					}
 //				})
 			}
