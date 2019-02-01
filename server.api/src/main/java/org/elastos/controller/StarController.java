@@ -25,10 +25,11 @@ public class StarController {
     @Autowired
     private StarService starService;
 
-    @RequestMapping(value = "blessing", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "blessing", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @Authorization
     public String bless(@RequestAttribute String reqBody) {
+        logger.info("blessing:"+ reqBody);
         Map<String, String> map = (Map<String, String>) JSON.parse(reqBody);
         String starName = map.get("star_name");
         String userName = map.get("user_name");
