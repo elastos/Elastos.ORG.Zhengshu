@@ -21,7 +21,7 @@
 			<img src="../assets/images/logo.png" alt="" />
 		</div>
 		<div class="massage">
-			<p>本证书由BIT.GAME提供技术支持</p>
+			<p style="font-size:0.8em">本证书由BIT.GAME提供技术支持</p>
 		</div>
 
 	</div>
