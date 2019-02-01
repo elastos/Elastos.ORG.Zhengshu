@@ -118,50 +118,9 @@ public class StarController {
 
 
         List<StarInfo> listStarInfo=fansBlessService.getStarInfoList();
-        long utime= listStarInfo.get(0).getUtime().getTime()/1000;
-        long timeNow= new Date().getTime()/1000;
-        long interval=timeNow-utime;
-        if(interval>60){
-            List<StarBlenssCount> list = list = fansBlessService.getStarBlessRanking();
-            for(StarBlenssCount starBlenssCount : list){
-                String starId=String.valueOf(starBlenssCount.getStarId());
-                //String starName=starBlenssCount.getStarName();
-                int blessingCount=starBlenssCount.getBlessingCount();
-                fansBlessService.updateStarInfo(Integer.valueOf(starId),blessingCount);
-
-            }
-        }
-        listStarInfo=fansBlessService.getStarInfoList();
-        //List<StarInfo> listStarInfo=fansBlessService.getStarInfoList();
         Map<String,Object> map=new HashMap<>();
         map.put("StarRanking",listStarInfo);
         return Result.success(map,"success");
-
-
-//        String rankingJson=redisService.getValueByKey("ela_star_ranking_json");
-//        Map<String,Object> map=new HashMap<>();
-//        if(StringUtil.isNullOrEmpty(rankingJson)){
-//            list = fansBlessService.getStarBlessRanking();
-//            long timeNow= new Date().getTime()/1000;
-//            map.put("StarRanking",list);
-//            map.put("updateTime",timeNow);
-//            rankingJson=JSONObject.toJSON(map).toString();
-//            redisService.set("ela_star_ranking_json",rankingJson);
-//        }else{
-//            Long rankUpdateTime=Long.valueOf(JSONObject.parseObject(rankingJson).get("updateTime").toString());
-//            long timeNow= new Date().getTime()/1000;
-//            long interval=timeNow-rankUpdateTime;
-//            if(interval>20){
-//                list = fansBlessService.getStarBlessRanking();
-//                map.put("StarRanking",list);
-//                map.put("updateTime",timeNow);
-//                rankingJson=JSONObject.toJSON(map).toString();
-//                redisService.set("ela_star_ranking_json",rankingJson);
-//            }
-//        }
-//        JSONObject jobj=JSON.parseObject(rankingJson);
-//
-//        return Result.success(jobj,"success");
     }
 
     /**
@@ -223,33 +182,48 @@ public class StarController {
 
         String hash="0";
         //发送到链上
-//        Map<String,String> postMap=new HashMap<>();
-//        postMap.put("star_name",starName);
-//        postMap.put("user_name",userNick);
-//        postMap.put("user_id",userIdentity);
-//        postMap.put("blessing",blessingContent);
-//        String postJson=JSONObject.toJSON(postMap).toString();
-//        String result = post(chainApi,postJson);
-//        if(StringUtil.isNullOrEmpty(result)){
-//            return Result.fail(1003,"提交失败");
-//        }
-//        JSONObject jsonObj = JSONObject.parseObject(result);
-//        String status=jsonObj.get("status").toString();
-//        if(!"200".equals(status)){
-//            return Result.fail(1003,"提交失败");
-//        }
-//        String data = jsonObj.get("data").toString();
-//        hash=JSONObject.parseObject(data).get("txid").toString();
+        Map<String,String> postMap=new HashMap<>();
+        postMap.put("star_name",starName);
+        postMap.put("user_name",userNick);
+        postMap.put("user_id",userIdentity);
+        postMap.put("blessing",blessingContent);
+        String postJson=JSONObject.toJSON(postMap).toString();
+        String result = post(chainApi,postJson);
+        if(StringUtil.isNullOrEmpty(result)){
+            return Result.fail(1003,"提交失败");
+        }
 
-        fansBless.setTxid(hash);
-        fansBlessService.saveStarBlessInfo(fansBless);
+        try{
+            JSONObject jsonObj= JSONObject.parseObject(result);
+            String status=jsonObj.get("status").toString();
+            if(!"200".equals(status)){
+                return Result.fail(1003,"提交失败");
+            }
+            String data = jsonObj.get("data").toString();
+            hash=JSONObject.parseObject(data).get("txid").toString();
 
-        Map<String,Object> resMap=new HashMap<>();
-        resMap.put("userNick",userNick);
-        resMap.put("blessingCount",0);
-        resMap.put("hash",hash);
+            fansBless.setTxid(hash);
+            int blessingCount=0;
+            int saveRes= fansBlessService.saveStarBlessInfo(fansBless);
+            if(saveRes>0){
+                int id=fansBless.getId();
+                blessingCount=fansBlessService.getBlessingCountNew(Integer.valueOf(starId),id);
+                fansBlessService.updateStarInfo(Integer.valueOf(starId),blessingCount);
+            }
 
-        return Result.success(resMap,"success");
+
+            Map<String,Object> resMap=new HashMap<>();
+            resMap.put("userNick",userNick);
+            resMap.put("blessingCount",blessingCount);
+            resMap.put("hash",hash);
+
+            return Result.success(resMap,"success");
+        }catch (Exception e){
+            logger.error(e.toString());
+            return Result.fail(1004,"提交失败");
+        }
+
+
     }
 
     String createAuthHeaderValue(){

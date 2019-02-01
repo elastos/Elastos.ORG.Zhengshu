@@ -21,11 +21,9 @@
 			<img src="../assets/images/logo.png" alt="" />
 		</div>
 		<div class="massage">
-			<p>本证书由bitgame提供技术支持</p>
-			<!--<br />点此查看
-				<a href="https://play.fishchain.io/">bitgame更多</a>好玩内容-->
-			<br />
-			<a href="https://play.fishchain.io/">https://play.fishchain.io/</a>
+
+			<p>本证书由BIT.GAME提供技术支持</p>
+
 		</div>
 
 	</div>
