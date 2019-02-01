@@ -15,13 +15,14 @@ public interface FansBlessService {
 
     List<StarBlenssCount> getStarBlessRanking();
 
-    void saveStarBlessInfo(FansBless fansBless);
+    int saveStarBlessInfo(FansBless fansBless);
 
     int userExists(String star, String user);
 
     List<BlessingInfo> getBlessingInfo();
 
     int getBlessingCountToday(String userIdentity);
+    int getBlessingCountNew(int starId,int id);
     List<StarInfo> getStarInfoList();
     int updateStarInfo(int starId,int blessingCount);
 }
