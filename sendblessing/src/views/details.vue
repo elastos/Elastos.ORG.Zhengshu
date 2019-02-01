@@ -118,6 +118,7 @@
 					//					service.Bus.$emit('datasfn', datas);
 					//					service.Bus.$emit('blessList', this.bless_list);
 					if(result.data.code == 0) {
+						console.log(this.$route.query.nickname)
 						this.$router.push({
 							name: "share",
 							query: {

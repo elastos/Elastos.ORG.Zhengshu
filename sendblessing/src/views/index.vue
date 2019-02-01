@@ -73,7 +73,7 @@
 //						openid: 'oK',
 //						avatar: 'https%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTIGDIo3KCQ9YHGaIrDu2iaWaXEyQib5F7iarDfqJOicn8Wevic7Ozibw7Ku50Q6IlPeC0qaWMnznevUj35w%2F132'
 //,
-//						nickname: '00ssdfsfdfsd8'
+//						nickname: '%F0%9F%98%88%F0%9F%98%83%F0%9F%98%83%F0%9F%98%83'
 //					}
 //				})
 			}
