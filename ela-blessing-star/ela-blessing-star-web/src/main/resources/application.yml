@@ -1,0 +1,32 @@
+server:
+  port: 9015
+spring:
+  application:
+    name: ela-blessing-star
+  datasource-ela:
+      type: com.alibaba.druid.pool.DruidDataSource
+      jdbc-url: jdbc:mysql://inner.bitgamex.org:4042/ela_blessing_star?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      driver-class-name: com.mysql.jdbc.Driver
+      username: bitgame
+      password: bitgame2018
+      initialSize: 1
+      minIdle: 3
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,slf4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+url:
+  chain-api: https://blessing.elastos.org/api/1/star/blessing
+## API Access Key
+acc_id: org.elastos.bless.star
+acc_secret: SmATCfWN1LqHH8b5bbRDbaz0IMhA5u
+
+
