@@ -5,11 +5,11 @@
 		<div class="star_card">
 			<img :src="datalist.cardUrl" />
 			<div class="blessings_box">
-				<span class="blessings">{{$route.query.nickname}}:</span>
+				<span class="blessings">{{nickname}}:</span>
 				<span>{{$route.query.txt}}</span>
 			</div>
 		</div>
-		<div class="users"><span>{{$route.query.nickname}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{$route.query.blessingcount}} 份爱的表白</div>
+		<div class="users"><span>{{nickname}}</span>为<span>{{datalist.name}}</span><br />送上了第 {{$route.query.blessingcount}} 份爱的表白</div>
 		<div class="hash_code">
 			<p>爱的表白已在<b>Elastos区块链</b>上雕刻，证书hash：</p>
 			<span class="code_num">{{$route.query.hash}}</span>
@@ -41,7 +41,7 @@
 				bless_list: {
 					content: '遇到悬崖就飞，喜欢什么就追。'
 				},
-
+				nickname:''
 			}
 		},
 		methods: {
@@ -71,6 +71,7 @@
 			var that = this;
 		},
 		created() {
+			this.nickname = decodeURIComponent(this.$route.query.nickname);
 			this.datass = store.state.datas;
 			this.bless_list = store.state.txt;
 			let that = this;
