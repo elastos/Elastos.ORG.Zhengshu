@@ -131,7 +131,7 @@ let datas = {
 						"url": "../../static/images/touxiang_big/朱正廷.png",
 						"cardUrl": "../../static/images/card/朱正廷.png",
 						"headerUrl": "./../static/images/touxiang_small/朱正廷.png",
-						"name": "朱正延"
+						"name": "朱正廷"
 					},
 
 				],
