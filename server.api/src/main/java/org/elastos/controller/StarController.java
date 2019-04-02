@@ -27,7 +27,6 @@ public class StarController {
 
     @RequestMapping(value = "blessing", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @Authorization
     public String bless(@RequestAttribute String reqBody) {
         logger.info("blessing:"+ reqBody);
         Map<String, String> map = (Map<String, String>) JSON.parse(reqBody);

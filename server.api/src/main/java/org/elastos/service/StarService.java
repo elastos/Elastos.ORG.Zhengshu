@@ -1,9 +1,10 @@
 package org.elastos.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elastos.conf.AccessKeyConfiguration;
+import org.elastos.conf.BlockAgentConfiguration;
 import org.elastos.conf.DidConfiguration;
 import org.elastos.constants.RetCode;
-import org.elastos.util.BlockAgentService;
 import org.elastos.util.ServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +23,16 @@ public class StarService {
     DidConfiguration didConfiguration;
 
     @Autowired
-    BlockAgentService blockAgentService;
+    AccessKeyConfiguration accessKeyConfiguration;
+
+    @Autowired
+    BlockAgentConfiguration blockAgentConfiguration;
 
     private ElaDidService didService = new ElaDidServiceImp();
 
     public void initService(){
         didService.setElaNodeUrl(didConfiguration.getNode());
+        didService.setBlockAgentUrl(blockAgentConfiguration.getPrefix());
     }
 
     public String bless(String starName, String userName, String userId, String belssing) {
@@ -46,7 +51,7 @@ public class StarService {
             return new ServerResponse().setStatus(RetCode.ERROR_INTERNAL).setMsg("打包信息错误").toJsonString();
         }
 
-        String txid = blockAgentService.upChainData(rawData);
+        String txid = didService.upChainByBlockAgent(accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
         if (null == txid) {
             logger.error("Err bless upChainData failed.");
             System.out.println("Err bless upChainData failed.");

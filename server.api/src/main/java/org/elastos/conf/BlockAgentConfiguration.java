@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("blockagent")
 public class BlockAgentConfiguration {
     private String prefix           ;
-    private String upChainData      ;
 
     public String getPrefix() {
         return prefix;
@@ -23,11 +22,4 @@ public class BlockAgentConfiguration {
         this.prefix = prefix;
     }
 
-    public String getUpChainData() {
-        return prefix + upChainData;
-    }
-
-    public void setUpChainData(String upChainData) {
-        this.upChainData = upChainData;
-    }
 }
