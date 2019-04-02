@@ -76,7 +76,8 @@
 				starbless: '',
 				bless_list: '遇到悬崖就飞，喜欢什么就追。',
 				openid: '111',
-				nickname: ''
+				nickname: '',
+				encodenickname:''
 			}
 		},
 		computed: {
@@ -96,7 +97,7 @@
 				//let openid = this.query.openId;
 				var datas = new Object();
 				datas.openId = this.query.openid;
-				datas.nickName = this.$route.query.nickname;
+				datas.nickName = this.encodenickname;
 				datas.starId = this.ids;
 				datas.starName = this.detailsList.name;
 				datas.emoticonId = "0";
@@ -159,6 +160,7 @@
 		created() {
 			this.nickname = decodeURIComponent(this.$route.query.nickname);
 			this.userImg = decodeURIComponent(this.$route.query.avatar);
+			this.encodenickname = encodeURI(this.nickname);
 			if(this.chooseList == '') {
 				let data = {}
 				var url = api + '/api/blessing_content_info';
