@@ -21,7 +21,7 @@ in file: application.properties.
 ## Block agent service url
 blockagent.prefix      = https://api-wallet-did-testnet.elastos.org
 
-## API Access Key
+## Block agent Access Key
 accesskey.id  = org.elastos.bless.star
 accesskey.secret = SmATCfWN1LqHH8b5bbRDbaz0IMhA5u
 
@@ -49,31 +49,11 @@ HTTP: POST
 URL: /api/1/star/blessing
 HEADERS: 
     Content-Type: application/json
-    X-Elastos-Agent-Auth: {"auth":"auth_code","id":"org.elastos.bless.star","time":"system time(long)"}
 ```
 
-For example:
-We Create HTTP header "X-Elastos-Agent-Auth" lile:
-```java
-import org.apache.shiro.crypto.hash.SimpleHash;
-String createAuthHeaderValue(){
-    String acc_id = "org.elastos.bless.star";
-    String acc_secret = "SmATCfWN1LqHH8b5bbRCEaz0IMhA5u";
-    long time = new Date().getTime();
-    String strTime = String.valueOf(time);
-    SimpleHash hash = new SimpleHash("md5", secret, strTime);
-    String auth = hash.toHex();
-    Map<String, String> map = new HashMap<>();
-    map.put("id", id);
-    map.put("time", String.valueOf(time));
-    map.put("auth", auth);
-    String X-Elastos-Agent-Auth_value = JSON.toJSONString(map);
-    return X-Elastos-Agent-Auth_value;
-}
-```
-Then We send blessing up chain like this:
+We send blessing up chain like this:
 ```url
-http://localhost:8094/api/1/star/blessing
+http://localhost:8093/api/1/star/blessing
 ```
 Post body like
 ```json
