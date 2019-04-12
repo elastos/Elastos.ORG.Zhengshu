@@ -6,20 +6,20 @@
  */
 package org.elastos.conf;
 
+import jnr.ffi.annotations.In;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("blockagent")
-public class BlockAgentConfiguration {
-    private String prefix           ;
+@ConfigurationProperties("threshold")
+public class ThresholdConfiguration {
+    private Integer userThreshold;
 
-    public String getPrefix() {
-        return prefix;
+    public Integer getUserThreshold() {
+        return userThreshold;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setUserThreshold(Integer userThreshold) {
+        this.userThreshold = userThreshold;
     }
-
 }

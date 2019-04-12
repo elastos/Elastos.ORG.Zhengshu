@@ -37,6 +37,13 @@ public class StarController {
         return starService.bless(starName, userName, userId, blessing);
     }
 
+    @RequestMapping(value = "blesses", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String blessesCountOfStar(@RequestParam(name = "star") String starName) {
+        logger.info("blessesCountOfStar:"+ starName);
+        return starService.blessCountOfStar(starName);
+    }
+
     @RequestMapping(value = "echo", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String echo(@RequestAttribute String reqBody) {

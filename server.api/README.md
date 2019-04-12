@@ -75,3 +75,23 @@ If Success, we will get response like:
 }
 ```
 
+### Get Blesses of a star 
+```yaml
+HTTP: GET 
+URL: /api/1/star/blesses?star=starName
+```
+
+We get blesses count of a star like this:
+```url
+http://localhost:8093/api/1/star/blesses?star=中文
+```
+If Success, we will get response like:
+```json
+{
+    "data": {
+        "count": 1
+    },
+    "status": 200
+}
+```
+

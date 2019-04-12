@@ -11,10 +11,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @EnableAutoConfiguration
 @SpringBootApplication
+@EnableScheduling
 @ComponentScan("org.elastos")
 @EnableCaching
 public class Application {
