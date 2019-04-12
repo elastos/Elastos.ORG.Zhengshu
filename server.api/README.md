@@ -18,8 +18,9 @@ If there is build success, Then the package blessing.star.service.api-0.0.1.jar 
 in file: application.properties.
 
 ```yaml
-## Block agent service url
-blockagent.prefix      = https://api-wallet-did-testnet.elastos.org
+## service url
+elaservice.blockAgentPrefix      = https://api-wallet-did-testnet.elastos.org
+elaservice.didExplorerPrefix     = http://sidebackend-testnet.bbjb2qwn2i.ap-northeast-1.elasticbeanstalk.com
 
 ## Block agent Access Key
 accesskey.id  = org.elastos.bless.star
