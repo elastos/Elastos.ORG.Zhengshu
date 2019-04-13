@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -37,18 +38,21 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
 
 
     private void requestRecord(HttpServletRequest request) throws IOException {
-        InputStream is = request.getInputStream();
-        int index = -1;
-        byte[] buf = new byte[1024];
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        while ((index = is.read(buf)) != -1) {
-            baos.write(buf, 0, index);
-        }
-        String reqBody = baos.toString();
         String method = request.getMethod();
         String requestURI = request.getRequestURI();
         String queryString = request.getQueryString();
-        request.setAttribute("reqBody", reqBody);
+        String reqBody = "";
+        if(RequestMethod.POST.toString().equals(method)){
+            InputStream is = request.getInputStream();
+            int index = -1;
+            byte[] buf = new byte[1024];
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while ((index = is.read(buf)) != -1) {
+                baos.write(buf, 0, index);
+            }
+            reqBody = baos.toString();
+            request.setAttribute("reqBody", reqBody);
+        }
         logger.debug("method = {},reqBody = {},requestURI = {},queryString={}", method, reqBody, requestURI, queryString);
     }
 

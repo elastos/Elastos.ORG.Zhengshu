@@ -6,7 +6,6 @@
  */
 package org.elastos.conf;
 
-import jnr.ffi.annotations.In;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
