@@ -91,20 +91,18 @@ public class StarService {
     }
 
     private int getStarBlesses(String starName){
-        String response = HttpUtil.get(elaServiceConfiguration.getDidExplorerPrefix()+ "/api/1/didexplorer/did/" + didConfiguration.getDid()+ "/status/all?detailed=true", null);
+        String response = HttpUtil.get(elaServiceConfiguration.getDidExplorerPrefix()+ "/api/1/didexplorer/did/" + didConfiguration.getDid()+ "/property_history?key="+starName, null);
         Map<String, Object> msg = (Map<String, Object>) JSON.parse(response);
         if ((int) msg.get("status") != 200) {
             System.out.println("Err: getStarBlesses failed" + msg.get("result"));
             return 0;
         }
 
-        List<ChainDetailedDidProperty>didProperties = JSON.parseArray((String)msg.get("result"),ChainDetailedDidProperty.class);
+        List<Object>didProperties = JSON.parseArray((String)msg.get("result"));
 
         int count = 0;
-        for (ChainDetailedDidProperty p : didProperties) {
-            if(p.getPropertyKey().equals(starName)){
-                count++;
-            }
+        if (null != didProperties) {
+            count = didProperties.size();
         }
         return count;
     }
