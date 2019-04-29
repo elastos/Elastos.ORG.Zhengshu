@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/1/star")
+@RequestMapping("/api/1/association/star")
 public class StarController {
     private static Logger logger = LoggerFactory.getLogger(StarController.class);
 
