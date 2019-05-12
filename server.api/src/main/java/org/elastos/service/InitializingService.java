@@ -14,10 +14,14 @@ public class InitializingService implements InitializingBean {
     @Autowired
     StarService starService;
 
+    @Autowired
+    AssociationService associationService;
+
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("------------In PlatformInitialization----------------");
         starService.initService();
+        associationService.initService();
         System.out.println("------------Out PlatformInitialization----------------");
     }
 

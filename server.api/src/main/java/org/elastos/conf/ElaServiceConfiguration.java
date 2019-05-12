@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("elaservice")
 public class ElaServiceConfiguration {
     private String blockAgentPrefix;
-    private String didExplorerPrefix;
+    private String didExplorerUrl;
 
     public String getBlockAgentPrefix() {
         return blockAgentPrefix;
@@ -23,11 +23,11 @@ public class ElaServiceConfiguration {
         this.blockAgentPrefix = blockAgentPrefix;
     }
 
-    public String getDidExplorerPrefix() {
-        return didExplorerPrefix;
+    public String getDidExplorerUrl() {
+        return didExplorerUrl;
     }
 
-    public void setDidExplorerPrefix(String didExplorerPrefix) {
-        this.didExplorerPrefix = didExplorerPrefix;
+    public void setDidExplorerUrl(String didExplorerUrl) {
+        this.didExplorerUrl = didExplorerUrl;
     }
 }

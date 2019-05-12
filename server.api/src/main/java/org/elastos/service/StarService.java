@@ -6,7 +6,6 @@ import org.elastos.conf.AccessKeyConfiguration;
 import org.elastos.conf.ElaServiceConfiguration;
 import org.elastos.conf.DidConfiguration;
 import org.elastos.constants.RetCode;
-import org.elastos.pojo.ChainDetailedDidProperty;
 import org.elastos.util.HttpUtil;
 import org.elastos.util.ServerResponse;
 import org.slf4j.Logger;
@@ -91,7 +90,7 @@ public class StarService {
     }
 
     private int getStarBlesses(String starName){
-        String response = HttpUtil.get(elaServiceConfiguration.getDidExplorerPrefix()+ "/api/1/didexplorer/did/" + didConfiguration.getDid()+ "/property_history?key="+starName, null);
+        String response = HttpUtil.get(elaServiceConfiguration.getDidExplorerUrl()+ "/api/1/didexplorer/did/" + didConfiguration.getDid()+ "/property_history?key="+starName, null);
         Map<String, Object> msg = (Map<String, Object>) JSON.parse(response);
         if ((int) msg.get("status") != 200) {
             System.out.println("Err: getStarBlesses failed" + msg.get("result"));

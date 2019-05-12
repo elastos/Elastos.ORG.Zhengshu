@@ -20,7 +20,7 @@ in file: application.properties.
 ```yaml
 ## service url
 elaservice.blockAgentPrefix      = https://api-wallet-did-testnet.elastos.org
-elaservice.didExplorerPrefix     = http://sidebackend-testnet.bbjb2qwn2i.ap-northeast-1.elasticbeanstalk.com
+elaservice.didExplorerUrl     = http://sidebackend-testnet.bbjb2qwn2i.ap-northeast-1.elasticbeanstalk.com
 
 ## Block agent Access Key
 accesskey.id  = org.elastos.bless.star
