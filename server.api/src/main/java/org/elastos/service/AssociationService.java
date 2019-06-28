@@ -32,11 +32,9 @@ public class AssociationService {
     @Autowired
     ThresholdManager thresholdManager;
 
-    private ElaDidService didService = new ElaDidServiceImp();
+    private ElaDidService didService = new ElaDidService();
 
     public void initService() {
-        didService.setElaNodeUrl(didConfiguration.getNode());
-        didService.setBlockAgentUrl(elaServiceConfiguration.getBlockAgentPrefix());
     }
 
     public String certificate(String name, String content) {
@@ -47,14 +45,14 @@ public class AssociationService {
         }
 
 
-        String rawData = didService.packDidRawData(didConfiguration.getPrivateKey(), name, content);
+        String rawData = didService.packDidProperty(didConfiguration.getPrivateKey(), name, content);
         if (null == rawData) {
             logger.error("Err certificate packDidRawData failed.");
             System.out.println("Err certificate packDidRawData failed.");
             return new ServerResponse().setStatus(RetCode.ERROR_INTERNAL).setMsg("打包信息错误").toJsonString();
         }
 
-        String txid = didService.upChainByBlockAgent(accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
+        String txid = didService.upChainByAgent(elaServiceConfiguration.getBlockAgentPrefix(), accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
         if (null == txid) {
             logger.error("Err certificate upChainData failed.");
             System.out.println("Err certificate upChainData failed.");

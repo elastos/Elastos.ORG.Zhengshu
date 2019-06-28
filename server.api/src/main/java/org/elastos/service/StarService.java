@@ -34,11 +34,9 @@ public class StarService {
     @Autowired
     ThresholdManager thresholdManager;
 
-    private ElaDidService didService = new ElaDidServiceImp();
+    private ElaDidService didService = new ElaDidService();
 
     public void initService(){
-        didService.setElaNodeUrl(didConfiguration.getNode());
-        didService.setBlockAgentUrl(elaServiceConfiguration.getBlockAgentPrefix());
     }
 
     public String bless(String starName, String userName, String userId, String belssing) {
@@ -55,14 +53,14 @@ public class StarService {
 
         String didPropertyValue = userName + "(" + userId + "), " + belssing;
 
-        String rawData = didService.packDidRawData(didConfiguration.getPrivateKey(), starName, didPropertyValue);
+        String rawData = didService.packDidProperty(didConfiguration.getPrivateKey(), starName, didPropertyValue);
         if (null == rawData) {
             logger.error("Err bless packDidRawData failed.");
             System.out.println("Err bless packDidRawData failed.");
             return new ServerResponse().setStatus(RetCode.ERROR_INTERNAL).setMsg("打包信息错误").toJsonString();
         }
 
-        String txid = didService.upChainByBlockAgent(accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
+        String txid = didService.upChainByAgent(elaServiceConfiguration.getBlockAgentPrefix(), accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
         if (null == txid) {
             logger.error("Err bless upChainData failed.");
             System.out.println("Err bless upChainData failed.");
