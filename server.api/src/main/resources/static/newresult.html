@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>qrcode</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script src="js/qrcode.js"></script>
     <style>
         .kuang {
@@ -31,56 +30,52 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 100%;
-            padding: 0px 25px;
         }
         
         .kuang .parent .content .p0 {
-            width: 100%;
             text-align: center;
-            font-size: 25px;
+            font-size: 36px;
             text-decoration: underline;
+            /* color:#6090A8; */
             color: #4878C0;
         }
         
         .kuang .parent .content .p1 {
-            font-size: 12px;
+            margin-top: 5px;
+            font-size: 20px;
             color: #000000;
             text-align: center;
         }
         
         .kuang .parent .content .p2 {
-            margin-top: 10px;
-            font-size: 20px;
+            margin-top: 15px;
+            font-size: 28px;
             color: #4878C0;
             text-align: center;
         }
         
         .kuang .parent .content .p3 {
+            margin-top: 15px;
             font-size: 20px;
             color: #000000;
             text-align: center;
         }
         
         .kuang .parent .content .p4 {
-            font-size: 20px;
+            margin-top: 15px;
+            font-size: 24px;
             color: #4878C0;
             text-align: center;
-            margin-bottom: 20px;
         }
         
         .left {
             float: left;
             width: 50%;
-            height: 128px;
-            padding: 5px;
-            text-align: center;
         }
         
         .right {
             float: left;
             width: 50%;
-            height: 128px;
-            padding: 5px;
         }
     </style>
 </head>
@@ -89,19 +84,24 @@
     <div class="kuang">
         <div class="parent">
             <div class="content">
-                <div class="p0">Certificate of Participate</div>
-                <div class="p1">Is hereby granted to</div>
-                <div class="p2" id="name"></div>
-                <div class="p3">To certify that he/she has joined the</div>
-                <div class="p4" id="content"></div>
-                <div class="left">
-                    <img src="./images/xian-bi_Logo.jpg" style="width:128px;      margin-bottom:10px;margin-top: 27px;" />
-                    <div>
-                        <img src="./images/Elastos_Logo.png" style="width:128px" />
+                <p class="p0">Certificate of Participate</p>
+                <p class="p1">Is hereby granted to</p>
+                <p class="p2">张玉新 Yuxin Zhang</p>
+                <p class="p3">To certify that he/she has joined the</p>
+                <p class="p4">Bright Internet China Symposium 2019 @ Xi’an</p>
+                <div style="text-align: center;position: relative;margin-top:45px;width: 100%">
+
+                    <div class="left">
+                        <div style="text-align:right;">
+                            <img src="./images/xian-bi_Logo.jpg" style="width:221px;margin: 10px;" />
+                        </div>
+                        <div style="text-align:right;">
+                            <img src="./images/Elastos_Logo.png" style="width:228px" />
+                        </div>
                     </div>
-                </div>
-                <div class="right">
-                    <div id="qrcode" style="width:128px;margin:0 auto"></div>
+                    <div class="right">
+                        <div id="qrcode" style="display:inline-block;position: absolute;left:53%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,20 +109,16 @@
 </body>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script>
-    var url = decodeURI(GetQueryString("url")) || "test";
-    var name = decodeURI(GetQueryString("name")) || "";
-    var content = decodeURI(GetQueryString("content")) || "";
+    var url = GetQueryString("url") || "test";
     var qrcode = new QRCode('qrcode', {
         text: url,
-        width: 128,
-        height: 128,
+        width: 148,
+        height: 148,
         colorDark: '#000000',
         colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.H
     });
     $("#result").text(url);
-    $("#name").text(name);
-    $("#content").text(content);
 
     function chakan() {
         window.open(url);

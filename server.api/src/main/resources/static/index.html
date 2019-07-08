@@ -3,10 +3,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
-    <title>General DID Blockchain Service
-Powered by: Elastos & BTC.com</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>General DID Blockchain Service Powered by: Elastos & BTC.com</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <style>
@@ -21,7 +19,7 @@ Powered by: Elastos & BTC.com</title>
             -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
         }
-
+        
         input:focus {
             border-color: #66afe9;
             outline: 0;
@@ -32,31 +30,20 @@ Powered by: Elastos & BTC.com</title>
 </head>
 
 <body>
-<div style="padding-left:20px;padding-top:40px;padding-right:20px;text-align:left">
-    <h3>General DID Blockchain Service</h3>
-    <h4 style="margin-top: 5px;margin-bottom:20px">Powered by: <a href="https://www.elastos.org/">Elastos</a> & <a href="https://btc.com/">BTC.com</a></h4>
-    <p style="margin-top: 20px"><strong>DID: </strong><a href="https://idchain.elastos.org/properties_list/iV8D3SfqUZUomodfmarPHdnfCScnNMgipJ">iV8D3SfqUZUomodfmarPHdnfCScnNMgipJ</a></span></p>
-    <p style="margin-top: 10px"><strong>Property Name: <strong></p>
+    <div style="padding-left:20px;padding-top:40px;padding-right:20px;text-align:left">
+        <h3>General DID Blockchain Service</h3>
+        <h4 style="margin-top: 5px;margin-bottom:20px">Powered by: <a href="https://www.elastos.org/">Elastos</a> & <a href="https://btc.com/">BTC.com</a></h4>
+        <p style="margin-top: 20px"><strong>DID: </strong><a href="https://idchain.elastos.org/properties_list/iV8D3SfqUZUomodfmarPHdnfCScnNMgipJ">iV8D3SfqUZUomodfmarPHdnfCScnNMgipJ</a></span>
+        </p>
+        <p style="margin-top: 10px"><strong>Property Name: <strong></p>
     <p style="margin-top: 10px"><input id="name" placeholder="" style="border-radius:5px;width:100%;height: 30px;padding: 10px;"></p>
      <p style="margin-top: 10px">Property Value: </p>
      <p style="margin-top: 10px"><textarea rows="3" id="content"
                                          style="border:0;border-radius:5px;background-color:rgba(241,241,241,.98);width:100%;height: 100px;padding: 10px;resize: none;vertical-align:middle;"
-                                         placeholder=""></textarea></p>
+                                         placeholder="">Bright Internet China Symposium 2019 @ Xi’an </textarea></p>
                                     </table>
 </div>
   
-
-<!-- <div style="text-align: center;margin-top:55px">
-     <p style="margin-top:5px;margin-bottom:5px">iV8D3SfqUZUomodfmarPHdnfCScnNMgipJ
-    </p>
-    <p style="margin-top:5px;"><span>Property Name:</span><input id="name" placeholder="Please Property Name："
-                                      style="border-radius:5px;width: 355px;height: 30px;padding: 10px;">
-    </p>
-    <p style="margin-top:15px"><span>Property Value:</span><textarea rows="3" id="content"
-                                         style="border:0;border-radius:5px;background-color:rgba(241,241,241,.98);width: 355px;height: 100px;padding: 10px;resize: none;vertical-align:middle;"
-                                         placeholder="Please Property Value："></textarea></p>
-</div> -->
-
 <div style="text-align: center;margin-top:45px">
     <button type="button" class="btn btn-primary btn-lg" onClick="tijiao()" style="width: 120px">Submit</button>
 </div>
@@ -80,8 +67,8 @@ Powered by: Elastos & BTC.com</title>
             return;
         }
         shangchuan(name, content);
-//        var url = "https://www.baidu.com/";
-//        window.location.href = "result.html?url=" + url;
+        //var url = "https://www.baidu.com/";
+        //window.location.href = "result.html?url=" + url+"&name="+name+"&content="+content;
     }
 
     function shangchuan(name, content) {
@@ -100,7 +87,7 @@ Powered by: Elastos & BTC.com</title>
             success: function (data) { //成功回调函数
                 if (data.status === 200) {
                     var didUrl = data.data.did_explorer_url;
-                    window.location.href = "result.html?url=" + didUrl;
+                    window.location.href = "result.html?url=" + didUrl+"&name="+name+"&content="+content;
                 }
             },
             error: function (err) { //失败回调函数

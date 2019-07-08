@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv= "Content-Type" content="text/html; charset=utf-8" >
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>qrcode</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <script src="js/qrcode.js"></script>
+</head>
+
+<body>
+    <div style="text-align: center">
+        <h1>qrcode</h1>
+        <div id="qrcode" style="margin:0 auto;width: 256px"></div>
+    </div>
+    
+    <div style="text-align: center;margin-top:35px">
+        <p style="margin-top: 10px" onclick="chakan()" id="result">url</p>
+        <p style="margin-top: 10px">Please check in 5 minutes.</p>
+    </div>
+</body>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+    var url = GetQueryString("url");
+    var qrcode = new QRCode('qrcode', {
+  text: url,
+  width: 256,
+  height: 256,
+  colorDark : '#000000',
+  colorLight : '#ffffff',
+  correctLevel : QRCode.CorrectLevel.H
+});
+    $("#result").text(url);
+     
+    function chakan() {
+        window.open(url);
+    }
+
+    function GetQueryString(name) {　　　
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);　　　
+        if (r != null) return (r[2]);　　　
+        return null;
+    }
+</script>
+
+</html>
