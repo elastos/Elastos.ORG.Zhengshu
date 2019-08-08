@@ -7,7 +7,6 @@
 package org.elastos.controller;
 
 import com.alibaba.fastjson.JSON;
-import org.elastos.annotation.Authorization;
 import org.elastos.service.StarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

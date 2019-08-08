@@ -6,7 +6,6 @@ import org.elastos.constants.RetCode;
 import org.elastos.util.ServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,6 +63,6 @@ public class MappingExceptionResolver implements HandlerExceptionResolver {
             msg = ex.toString();
         }
 
-        return JSON.toJSONString(new ServerResponse().setMsg(msg).setStatus(status));
+        return JSON.toJSONString(new ServerResponse().setMsg(msg).setState(status));
     }
 }

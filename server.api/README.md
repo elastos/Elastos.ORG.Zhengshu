@@ -84,7 +84,7 @@ URL: /api/1/star/blesses?star=starName
 
 We get blesses count of a star like this:
 ```url
-http://localhost:8093/api/1/association/star/blesses?star=中文
+http://localhost:8093/api/1/association/star/blesses?star=ä¸­æ–‡
 ```
 If Success, we will get response like:
 ```json

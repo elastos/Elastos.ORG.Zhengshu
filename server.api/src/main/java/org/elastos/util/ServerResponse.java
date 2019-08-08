@@ -3,16 +3,16 @@ package org.elastos.util;
 import com.alibaba.fastjson.JSON;
 
 public class ServerResponse {
-    private int status;
+    private int state;
     private String msg;
     private Object data;
 
-    public int getStatus() {
-        return status;
+    public int getState() {
+        return state;
     }
 
-    public ServerResponse setStatus(int status) {
-        this.status = status;
+    public ServerResponse setState(int state) {
+        this.state = state;
         return this;
     }
 

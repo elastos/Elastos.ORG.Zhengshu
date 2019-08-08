@@ -16,6 +16,7 @@ public class DidConfiguration {
     private String did;
     private String privateKey;
     private String publicKey;
+    private String memo;
 
     public String getNode() {
         return node;
@@ -47,5 +48,13 @@ public class DidConfiguration {
 
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

@@ -43,12 +43,12 @@ public class StarService {
         if(StringUtils.isAnyBlank(starName, userName, userId, belssing)){
             logger.error("bless parameter has null");
             System.out.println("bless parameter has null");
-            return new ServerResponse().setStatus(RetCode.ERROR_PARAMETER).setMsg("传入参数不能为空").toJsonString();
+            return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("传入参数不能为空").toJsonString();
         }
 
         Integer rest  = thresholdManager.useUserRest(userId);
         if (rest < 0) {
-            return new ServerResponse().setStatus(RetCode.ERROR_PARAMETER).setMsg("已达当日最大祝福次数").toJsonString();
+            return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("已达当日最大祝福次数").toJsonString();
         }
 
         String didPropertyValue = userName + "(" + userId + "), " + belssing;
@@ -57,26 +57,26 @@ public class StarService {
         if (null == rawData) {
             logger.error("Err bless packDidRawData failed.");
             System.out.println("Err bless packDidRawData failed.");
-            return new ServerResponse().setStatus(RetCode.ERROR_INTERNAL).setMsg("打包信息错误").toJsonString();
+            return new ServerResponse().setState(RetCode.ERROR_INTERNAL).setMsg("打包信息错误").toJsonString();
         }
 
         String txid = didService.upChainByAgent(elaServiceConfiguration.getBlockAgentPrefix(), accessKeyConfiguration.getId(), accessKeyConfiguration.getSecret(), rawData);
         if (null == txid) {
             logger.error("Err bless upChainData failed.");
             System.out.println("Err bless upChainData failed.");
-            return new ServerResponse().setStatus(RetCode.ERROR_INTERNAL).setMsg("上链失败").toJsonString();
+            return new ServerResponse().setState(RetCode.ERROR_INTERNAL).setMsg("上链失败").toJsonString();
         }
         Map<String, String> data = new HashMap<>();
         data.put("txid", txid);
 
-        return new ServerResponse().setStatus(RetCode.SUCCESS).setData(data).toJsonString();
+        return new ServerResponse().setState(RetCode.SUCCESS).setData(data).toJsonString();
     }
 
     public String blessCountOfStar(String starName) {
         if(StringUtils.isBlank(starName)){
             logger.error("blessCountOfStar parameter has null");
             System.out.println("blessCountOfStar parameter has null");
-            return new ServerResponse().setStatus(RetCode.ERROR_PARAMETER).setMsg("传入参数不能为空").toJsonString();
+            return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("传入参数不能为空").toJsonString();
         }
 
         Integer count = this.getStarBlesses(starName);
@@ -84,7 +84,7 @@ public class StarService {
         Map<String, Object> data = new HashMap<>();
         data.put("count", count);
 
-        return new ServerResponse().setStatus(RetCode.SUCCESS).setData(data).toJsonString();
+        return new ServerResponse().setState(RetCode.SUCCESS).setData(data).toJsonString();
     }
 
     private int getStarBlesses(String starName){
