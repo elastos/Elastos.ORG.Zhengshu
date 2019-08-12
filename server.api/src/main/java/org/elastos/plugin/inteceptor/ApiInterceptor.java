@@ -9,6 +9,7 @@ package org.elastos.plugin.inteceptor;
 import org.elastos.constants.Auth;
 import org.elastos.constants.RetCode;
 import org.elastos.util.ServerResponse;
+import org.elastos.util.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(ApiInterceptor.class);
 
+    @Autowired
+    TokenUtil tokenUtil;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         requestRecord(request);
@@ -40,7 +44,7 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
             try {
                 response.setContentType("application/json;charset=UTF-8");
                 PrintWriter writer = response.getWriter();
-                writer.write(new ServerResponse().setState(RetCode.ERROR).setMsg("手机未验证").toJsonString());
+                writer.write(new ServerResponse().setState(RetCode.ERROR).setMsg("用户未登录").toJsonString());
                 writer.flush();
                 writer.close();
             } catch (IOException e) {
@@ -65,17 +69,39 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        if (authBySession(request)) {
+        if (authByHeader(request) || authBySession(request)) {
             return true;
         } else {
             return false;
         }
     }
 
+    private boolean authByHeader(HttpServletRequest request) {
+        String authorization = request.getHeader(Auth.AUTHORIZATION);
+        if (null != authorization) {
+            logger.debug("authorization:" + authorization);
+            //验证token
+            Long uid = tokenUtil.tokenToUser(authorization);
+            if (null != uid) {
+                //如果token能够获取到用户信息，则加入request,方便获取
+                request.setAttribute(Auth.USER_ID, uid);
+                return true;
+            } else {
+                logger.debug("no uid. authorization:" + authorization);
+                return false;
+            }
+        } else {
+            logger.debug("no authorization header");
+            return false;
+        }
+
+    }
+
     private boolean authBySession(HttpServletRequest request) {
         //Get user id from session
         Long uid = (Long) request.getSession().getAttribute(Auth.USER_ID);
         if (null != uid) {
+            //如果token能够获取到用户信息，则加入request,方便获取
             request.setAttribute(Auth.USER_ID, uid);
             return true;
         } else {
@@ -88,7 +114,7 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
         String requestURI = request.getRequestURI();
         String queryString = request.getQueryString();
         String reqBody = "";
-        if(RequestMethod.POST.toString().equals(method)){
+        if (RequestMethod.POST.toString().equals(method)) {
             InputStream is = request.getInputStream();
             int index = -1;
             byte[] buf = new byte[1024];

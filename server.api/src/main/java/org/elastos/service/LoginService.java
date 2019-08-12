@@ -9,9 +9,7 @@ import org.elastos.constants.RetCode;
 import org.elastos.dao.UserRepository;
 import org.elastos.dto.User;
 import org.elastos.exception.ElastosServiceException;
-import org.elastos.util.AliyunSmsUtil;
-import org.elastos.util.RandomString;
-import org.elastos.util.ServerResponse;
+import org.elastos.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,12 @@ public class LoginService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TokenUtil tokenUtil;
+
+    @Autowired
+    CheckPhoneUtil checkPhoneUtil;
+
     public String phoneCheck(HttpSession session, String phone) {
         if (StringUtils.isBlank(phone)) {
             logger.error("phoneCheck parameter has null");
@@ -48,10 +52,8 @@ public class LoginService {
             userRepository.save(user);
         }
 
-        String code = RandomString.createN(Auth.VERIFICATION_CODE_LENTH);
-        if(AliyunSmsUtil.sendSms(phone,code)){
-            session.setAttribute(Auth.VERIFICATION_CODE, code);
-        } else {
+        String code = checkPhoneUtil.createCode(phone);
+        if(!AliyunSmsUtil.sendSms(phone,code)){
             return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("网络异常,请稍候再试").toJsonString();
         }
 
@@ -66,8 +68,8 @@ public class LoginService {
             return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("传入参数异常").toJsonString();
         }
 
-        String vCode = session.getAttribute(Auth.VERIFICATION_CODE).toString();
-        if(!code.equals(vCode)){
+        String vCode = checkPhoneUtil.getCode(phone);
+        if ((null != vCode)&&(vCode.equals(code))) {
             return new ServerResponse().setState(RetCode.ERROR_DATA_NOT_FOUND).setMsg("校验码错误").toJsonString();
         }
 
@@ -92,16 +94,19 @@ public class LoginService {
         }
 
         session.setAttribute(Auth.USER_ID, user.getId());
-        session.removeAttribute(Auth.VERIFICATION_CODE);
+        String token = tokenUtil.createToken(user.getId());
 
         Map<String, String> data = new HashMap<>();
         data.put("did", user.getDid());
+        data.put("token", token);
 
         return new ServerResponse().setState(RetCode.SUCCESS).setData(data).toJsonString();
     }
 
     public String logout(HttpSession session, Long uid) {
         session.removeAttribute(Auth.USER_ID);
+        String token = tokenUtil.userToToken(uid);
+        tokenUtil.deleteToken(token, uid);
         return new ServerResponse().setState(RetCode.SUCCESS).toJsonString();
     }
 }
