@@ -69,7 +69,7 @@ public class LoginService {
         }
 
         String vCode = checkPhoneUtil.getCode(phone);
-        if ((null != vCode)&&(vCode.equals(code))) {
+        if ((null == vCode)||(!vCode.equals(code))) {
             return new ServerResponse().setState(RetCode.ERROR_DATA_NOT_FOUND).setMsg("校验码错误").toJsonString();
         }
 
