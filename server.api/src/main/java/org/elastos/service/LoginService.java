@@ -53,9 +53,9 @@ public class LoginService {
         }
 
         String code = checkPhoneUtil.createCode(phone);
-        if(!AliyunSmsUtil.sendSms(phone,code)){
-            return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("网络异常,请稍候再试").toJsonString();
-        }
+//        if(!AliyunSmsUtil.sendSms(phone,code)){
+//            return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("网络异常,请稍候再试").toJsonString();
+//        }
 
         Map<String, String> data = new HashMap<>();
         data.put("code", code);
