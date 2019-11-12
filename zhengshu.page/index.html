@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>did推广存证</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/qrcode.js"></script> -->
+    <style>
+        .top {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            left: 0px;
+            top: 0px;
+            z-index: 2;
+            background: #FF3365;
+        }
+        
+        .top .right {
+            text-align: right;
+            font-size: 20px;
+            color: #ffffff;
+            margin-right: 50px;
+        }
+        
+        .bg {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: url(./images/bg.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .main {
+            position: absolute;
+            width: 500px;
+            height: 300px;
+            line-height: 56px;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -150px;
+            background: #FFFFFF;
+            opacity: 0.8;
+        }
+        
+        .main .title {
+            font-family: PingFang SC;
+            font-size: 20px;
+            color: #333333;
+        }
+        
+        .main .hang {
+            width: 280px;
+            margin: 0 auto;
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #666666;
+            box-sizing: border-box;
+        }
+        
+        .main .hang input {
+            width: 80%;
+            padding-left: 5%;
+            border: 0;
+        }
+        
+        .main .shuoming {
+            width: 280px;
+            font-size: 12px;
+            text-align: left;
+            padding-left: 5%;
+            color: #666666;
+            margin: 0 auto;
+            margin-top: -10px;
+        }
+        
+        .button {
+            width: 280px;
+            height: 47px;
+            line-height: 47px;
+            font-size: 15px;
+            background: #FF3365;
+            color: #FFFFFF;
+            margin: 0 auto;
+        }
+        
+        .yanzheng {
+            position: absolute;
+            font-size: 12px;
+            width: 75px;
+            color: #1A31E7;
+            top: 0px;
+            right: 0px
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+        
+        .toast {
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            top: 25%;
+            transition: all .5s;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            border-radius: 5px;
+            color: #FFF;
+            background: rgba(17, 17, 17, 0.7);
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="toast" v-show="toastShow">
+            {{toastText}}
+        </div>
+        <div class="top">
+            <div class="right">登录/注册</div>
+        </div>
+        <div class="bg"></div>
+
+        <div class="main" :style="styleObject">
+            <div style="padding-top:10px"></div>
+            <div class="title">亦来云区块链证书系统</div>
+            <div style="padding-top:10px"></div>
+            <div class="hang" style="text-align: left">
+                <input placeholder="手机号" v-model="phone" />
+            </div>
+            <div style="padding-top:20px"></div>
+            <div class="hang" style="position: relative;text-align: left">
+                <input placeholder="验证码" v-model="code" />
+                <span class="yanzheng" v-if="timeOut != 0">{{timeOut}}s后重发</span>
+                <span class="yanzheng" v-if="timeOut === 0" @click="sendCode">发送验证码</span>
+            </div>
+            <div class="shuoming">
+                <input type="checkbox" style="vertical-align: middle;margin-top: -3px" v-model="isCheckbox" /> 未来30天自动登录
+            </div>
+            <div style="padding-top:10px"></div>
+            <div class="button" @click="login">
+                登录
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            timeOut: 0,
+            timer: "",
+            swdith: "",
+            styleObject: {
+                width: "",
+                "margin-left": "",
+            },
+            phone: "",
+            code: "",
+            toastShow: false,
+            toastText: '',
+            baseUrl: "https://zhengshu-api.elastos.org",
+            vCode: "",
+            isCheckbox: true
+        },
+        methods: {
+            toast(str) {
+                var v = this;
+                v.toastText = str
+                v.toastShow = true
+                setTimeout(function() {
+                    v.toastShow = false
+                }, 1500)
+            },
+            doCopy(publickey) {
+                var v = this;
+                this.$copyText(publickey).then(function(e) {
+                    v.toast("复制成功");
+                }, function(e) {})
+            },
+            codeAjax() {
+                if (this.phone === "") {
+                    this.toast("请输入手机号");
+                    return;
+                }
+                var url = this.baseUrl + '/api/1/association/phone';
+                var parms = {
+                    "phone": this.phone
+                };
+                this.postAjax(url, parms).then((res) => {
+                    if (res.state === 200) {
+                        this.vCode = res.data.code;
+                    }
+                }).catch(() => {
+
+                });
+            },
+            sendCode() {
+                this.codeAjax();
+                this.timeOut = 60;
+                this.timer = setInterval(() => {
+                    this.timeOut--;
+                    if (this.timeOut === 0) {
+                        clearInterval(this.timer);
+                    }
+                }, 1000);
+            },
+            loginAjax() {
+                var url = this.baseUrl + '/api/1/association/login';
+                var parms = {
+                    "phone": this.phone,
+                    "code": this.code
+                };
+                this.postAjax(url, parms).then((res) => {
+                    if (res.state === 200) {
+                        var obj = res.data;
+                        obj["phone"] = this.phone;
+                        localStorage.setItem('did.deposit', JSON.stringify(obj));
+                        location.href = "./step1.html";
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch((err) => {
+                    //this.toast(err);
+                    alert(JSON.stringify(err));
+                });
+            },
+            login() {
+                if (this.phone === "") {
+                    this.toast("请输入手机号");
+                    return;
+                }
+                if (this.code === "") {
+                    this.toast("请输入验证码");
+                    return;
+                }
+
+                if (this.vCode != this.code) {
+                    this.toast("验证码不正确");
+                    return;
+                }
+                this.loginAjax();
+                // var obj = {};
+                // obj["phone"] = this.phone;
+                // localStorage.setItem('did.deposit', JSON.stringify(obj));
+                // location.href = "./step1.html";
+            },
+            postAjax(url, parms) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        data: JSON.stringify(parms),
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+        },
+        destroyed() {
+            clearInterval(this.timer);
+        },
+        created: function() {
+            var isLogo = localStorage.getItem('did.deposit') || "";
+            if (isLogo != "") {
+                location.href = "./step1.html";
+            }
+            this.swdith = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (this.swdith < 500) {
+                var width = this.swdith - 20;
+                this.styleObject.width = width + 'px';
+                this.styleObject["margin-left"] = -(width / 2) + 'px';
+            }
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html>

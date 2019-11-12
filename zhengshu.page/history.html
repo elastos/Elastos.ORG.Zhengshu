@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>did推广存证</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <style>
+        .top {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            left: 0px;
+            top: 0px;
+            z-index: 99;
+            background: #FF3365;
+        }
+        
+        .top .left {
+            position: absolute;
+            /* width: px; */
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            left: 25px;
+            z-index: 99;
+        }
+        
+        .top .left img {
+            vertical-align: middle;
+            margin-top: -3px;
+        }
+        
+        .top .right {
+            position: absolute;
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            right: 25px;
+            z-index: 99;
+        }
+        
+        .top .right img {
+            vertical-align: middle;
+            margin-top: -9px
+        }
+        
+        .bg {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            /* background: url(./images/bg.png) no-repeat; */
+            background-size: 100% 100%;
+        }
+        
+        .main {
+            position: absolute;
+            width: 260px;
+            height: 56px;
+            line-height: 56px;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            margin-left: -130px;
+            margin-top: -28px;
+            font-size: 16px;
+            background: #1BC48C;
+            color: #FFFFFF;
+        }
+        
+        .choice {
+            position: absolute;
+            width: 240px;
+            height: 220px;
+            background: #FFFFFF;
+            right: 25px;
+            top: 60px;
+            z-index: 3;
+        }
+        
+        .choice ul li {
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: #333333;
+            height: 68px;
+            line-height: 68px;
+        }
+        
+        .xiaoshou {
+            cursor: pointer;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+        
+        .toast {
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            top: 25%;
+            transition: all .5s;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            border-radius: 5px;
+            color: #FFF;
+            background: rgba(17, 17, 17, 0.7);
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            width: 200px;
+        }
+        
+        .first {
+            position: relative;
+            margin-top: 62px;
+        }
+        
+        .first ul li {
+            float: left;
+            font-size: 16px;
+            width: 33.333%;
+            text-align: center;
+            color: #101010;
+            padding: 10px 0px;
+            cursor: pointer;
+        }
+        
+        .statusBorder {
+            border-bottom: 3px solid #FF3365;
+        }
+        
+        .ganxie {
+            padding: 0px 10px;
+            margin-top: 10px;
+            position: relative;
+            text-align: center;
+        }
+        
+        .ganxie ul {
+            width: 100%;
+        }
+        
+        .ganxie ul li {
+            float: left;
+        }
+        
+        .ganxin-line {
+            margin-top: 5px;
+            width: 100%;
+            height: 1px;
+            background: #999999;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="toast" v-show="toastShow">
+            {{toastText}}
+        </div>
+        <div class="top">
+            <div class="left xiaoshou" @click="zhuye">
+                <img src="./images/zhuye.png" /> 主页
+            </div>
+            <div class="right xiaoshou" @click="zhanghu">
+                <img src="./images/pepole.png" /> {{phone}}
+            </div>
+        </div>
+        <div class="choice" v-if="isShow">
+            <ul>
+                <li @click="exitDid">我已颁发的证书</li>
+                <li style="border-bottom:1px solid #DDDDDD" @click="createDid">颁发一个新证书</li>
+                <li style="color: #EA1F2B;" @click="logout">安全登出</li>
+            </ul>
+        </div>
+        <div class="first">
+            <ul>
+                <li @click="clickmuBanIndex('感谢信')" :class="{statusBorder:muBanIndex === '感谢信'}">感谢信</li>
+                <li @click="clickmuBanIndex('捐赠证明')" :class="{statusBorder:muBanIndex === '捐赠证明'}">捐赠证明</li>
+                <li @click="clickmuBanIndex('猫王国')" :class="{statusBorder:muBanIndex === '校友会'}">猫王国</li>
+            </ul>
+        </div>
+        <div style="clear: both;"></div>
+        <div v-if="muBanIndex === '感谢信'&&gxArr.length==0&&curArr.lenght==0" style="text-align: center;margin-top:10px">暂无感谢信历史记录</div>
+        <div class="ganxie" v-if="muBanIndex === '感谢信'&&gxArr.length>0">
+            <ul>
+                <li style="width: 20%;color: #000000;text-align: left">受奖人</li>
+                <li style="width: 20%;color: #000000;text-align: left">颁奖时间</li>
+                <li style="width: 30%;color: #999999;text-align: left">正文内容</li>
+                <li style="width: 30%;color: #000000;text-align: left">操作</li>
+            </ul>
+            <div style="clear: both;"></div>
+            <div class="ganxin-line"></div>
+            <div v-for="(item,index) in curArr" style="margin-top:10px">
+                <ul>
+                    <li style="width: 20%;color: #999999;text-align: left;height:40px;line-height: 40px">{{item["nicheng"]}}</li>
+                    <li style="width: 20%;color: #999999;text-align: left;height:40px;line-height: 40px;font-size: 14px">{{item["riqi"]}}</li>
+                    <li style="width: 35%;color: #999999;text-align: left;overflow:auto;;height:40px;line-height: 40px">{{item["mcontent"]}}</li>
+                    <li style="width: 25%;color: #999999;text-align: left;height:40px;line-height: 40px;text-align: center"><span style="display:inline-block;border: 1px solid #1BC48C;
+                        box-sizing: border-box;
+                        border-radius: 8px;padding:0px 10px;height:30px;line-height:30px;font-size: 12px;width: 100%;text-align: center;color:#1BC48C;margin-right:5px" @click="chakan(item)">查看证书</span>
+                        <!-- <span style="display:inline-block;border: 1px solid #1A31E7;
+                        box-sizing: border-box;
+                        border-radius: 8px;padding:0px 10px;height:30px;line-height:30px;font-size: 12px;width: 45%;text-align: center;color: #1A31E7;">复制链接</span></li> -->
+                </ul>
+                <div style="clear: both;"></div>
+                <div class="ganxin-line"></div>
+            </div>
+        </div>
+        <div v-if="muBanIndex === '捐赠证明'&&jzArr.length==0" style="text-align: center;margin-top:10px">暂无捐赠证明历史记录</div>
+        <div class="ganxie" v-if="muBanIndex === '捐赠证明'&&jzArr.length>0">
+            捐赠证明历史记录
+        </div>
+        <div v-if="muBanIndex === '猫王国'&&xyArr.length==0" style="text-align: center;margin-top:10px">暂无猫王国历史记录</div>
+        <div class="ganxie" v-if="muBanIndex === '猫王国'&&xyArr.length>0">
+            <ul>
+                <li style="width: 20%;color: #000000;text-align: left">受奖人</li>
+                <li style="width: 20%;color: #000000;text-align: left">颁奖时间</li>
+                <li style="width: 30%;color: #999999;text-align: left">正文内容</li>
+                <li style="width: 30%;color: #000000;text-align: left">操作</li>
+            </ul>
+            <div style="clear: both;"></div>
+            <div class="ganxin-line"></div>
+            <div v-for="(item,index) in curArr" style="margin-top:10px">
+                <ul>
+                    <li style="width: 20%;color: #999999;text-align: left;height:40px;line-height: 40px">{{item["nicheng"]}}</li>
+                    <li style="width: 20%;color: #999999;text-align: left;height:40px;line-height: 40px;font-size: 14px">{{item["riqi"]}}</li>
+                    <li style="width: 35%;color: #999999;text-align: left;overflow:auto;;height:40px;line-height: 40px">{{item["mcontent"]}}</li>
+                    <li style="width: 25%;color: #999999;text-align: left;height:40px;line-height: 40px;text-align: center"><span style="display:inline-block;border: 1px solid #1BC48C;
+                        box-sizing: border-box;
+                        border-radius: 8px;padding:0px 10px;height:30px;line-height:30px;font-size: 12px;width: 100%;text-align: center;color:#1BC48C;margin-right:5px" @click="chakan(item)">查看证书</span>
+                        <!-- <span style="display:inline-block;border: 1px solid #1A31E7;
+                        box-sizing: border-box;
+                        border-radius: 8px;padding:0px 10px;height:30px;line-height:30px;font-size: 12px;width: 45%;text-align: center;color: #1A31E7;">复制链接</span></li> -->
+                </ul>
+                <div style="clear: both;"></div>
+                <div class="ganxin-line"></div>
+            </div>
+        </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            isShow: false,
+            phone: "",
+            toastShow: false,
+            toastText: '',
+            baseUrl: "https://zhengshu-api.elastos.org",
+            muBanIndex: "感谢信",
+            dataList: [],
+            token: "",
+            did: "",
+            gxArr: [], //感谢信
+            jzArr: [], //捐赠
+            xyArr: [], //校友
+            curArr: [],
+            loading: false,
+        },
+        methods: {
+            chakan(item) {
+                var id = item["id"];
+                item["didUrl"] = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + id;
+                var eObj = encodeURIComponent(JSON.stringify(item));
+                location.href = "./step4.html?chinaObj=" + eObj;
+            },
+            handle(res) {
+
+                for (var index = 0; index < res.length; index++) {
+                    var item = res[index];
+                    var obj = JSON.parse(item["property_value"]);
+                    obj["id"] = item["property_key"];
+                    var type = obj["type"];
+                    if (type == "感谢信") {
+                        this.gxArr.push(obj);
+                    } else if (type == "捐赠证明") {
+                        this.jzArr.push(obj);
+                    } else if (type == "猫王国") {
+                        this.xyArr.push(obj);
+                    }
+                }
+                console.log("=========" + JSON.stringify(this.gxArr));
+                this.curArr = this.gxArr;
+            },
+            zhuye() {
+                location.href = "./step1.html";
+            },
+            clickmuBanIndex(name) {
+                this.muBanIndex = name;
+                switch (name) {
+                    case "感谢信":
+                        this.curArr = this.gxArr;
+                        break;
+                    case "捐赠证明":
+                        this.curArr = this.jzArr;
+                        break;
+                    case "猫王国":
+                        this.curArr = this.xyArr;
+                        break;
+                }
+            },
+            toast(str) {
+                var v = this;
+                v.toastText = str
+                v.toastShow = true
+                setTimeout(function() {
+                    v.toastShow = false
+                }, 1500)
+            },
+            doCopy(publickey) {
+                var v = this;
+                this.$copyText(publickey).then(function(e) {
+                    v.toast("复制成功");
+                }, function(e) {})
+            },
+            zhanghu() {
+                this.isShow = !this.isShow;
+            },
+            create() {
+                location.href = "./step2.html";
+            },
+            exitDid() {
+                location.href = "./history.html";
+            },
+            createDid() {
+                location.href = "./step2.html";
+            },
+            listAjax() {
+
+                //var url = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + this.phone;
+                //var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=18210230496&did=imFmcRR4cot9yXqrntwE7nMMaNcYzn7unm&start=0&pageSize=20";
+                var url = "https://idchain.elastos.org/api/v1/block/properteis/did?did=" + this.did;
+                //var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=" + this.phone + "&did=" + this.did + "&start=0&pageSize=20";
+                this.getAjax(url).then((res) => {
+                    var res = res || [];
+                    this.handle(res);
+                }).catch(() => {
+
+                });
+            },
+            logoutAjax() {
+                var url = this.baseUrl + "/api/1/association/logout";
+                this.postAjax(url).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("退出成功");
+                        localStorage.setItem('did.deposit', "");
+                        location.href = "./index.html";
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch(() => {
+                    this.toast("退出成功");
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            postAjax(url) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        data: JSON.stringify(parms),
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            getAjax(url) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        type: 'GET',
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            logout() {
+                this.logoutAjax();
+            },
+
+        },
+        destroyed() {
+            clearInterval(this.timer);
+        },
+        created: function() {
+            var obj = JSON.parse(localStorage.getItem('did.deposit'));
+            this.phone = obj["phone"];
+            this.token = obj["token"];
+            this.did = obj["did"];
+            this.listAjax();
+
+        },
+        mounted: function() {}
+    });
+</script>
+
+</html>
