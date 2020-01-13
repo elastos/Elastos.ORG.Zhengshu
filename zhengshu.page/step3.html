@@ -106,7 +106,7 @@
             margin: 0 auto;
             margin-top: 95px;
             text-align: center;
-            background: url(./images/ganxie_bg.jpg) no-repeat;
+            background: url(./images/newyear.jpg) no-repeat;
             background-size: 100% 100%;
         }
         
@@ -160,6 +160,10 @@
             padding: 0 15px;
             width: 200px;
         }
+        
+        .ycolor {
+            color: #e6c76a;
+        }
     </style>
 </head>
 
@@ -185,16 +189,16 @@
         </div>
         <div class="first" :style="{'background-image': 'url('+ curPathArr['0'].path + ')'} ">
             <div style="padding: 130px 0px 20px 0px">
-                <img v-if="(this.chainObj.title === '感谢信') || (this.chainObj.title === '捐赠证明') ||  (this.chainObj.type === '猫王国')" :src="curPathArr['0'].path1" style="width: 206px;" />
-                <p style="font-size: 24px;font-weight:bold" v-else>{{chainObj.title}}</p>
+                <img v-if="(this.chainObj.type === '感谢信') || (this.chainObj.title === '捐赠证明') ||  (this.chainObj.type === '猫王国')" :src="curPathArr['0'].path1" style="width: 206px;" />
+                <p style="font-size: 24px;font-weight:bold" :class='{"ycolor":this.chainObj.type}' v-else>{{chainObj.title}}</p>
             </div>
-            <div style="padding: 10px 40px 0px 40px;text-align: left" v-if="chainObj['nicheng']">{{chainObj["nicheng"]}}:</div>
-            <div style="padding: 5px 40px 0px 40px;text-align:left;line-height:24px;" v-if="chainObj['mcontent']">{{chainObj["mcontent"]}}
+            <div style="padding: 10px 40px 0px 40px;text-align: left" class="ycolor" v-if="chainObj['nicheng']">{{chainObj["nicheng"]}}:</div>
+            <div style="padding: 5px 40px 0px 40px;text-align:left;line-height:24px;;word-break: break-all;" :class='{"ycolor":this.chainObj.type}' v-if="chainObj['mcontent']">{{chainObj["mcontent"]}}
             </div>
-            <div style="padding: 10px 40px 0px 40px;text-align:right;line-height:24px;" v-if="chainObj['shuming']">{{chainObj["shuming"]}}
+            <div style="padding: 10px 40px 0px 40px;text-align:right;line-height:24px;" :class='{"ycolor":this.chainObj.type}' v-if="chainObj['shuming']">{{chainObj["shuming"]}}
             </div>
-            <div style="padding: 0px 40px 0px 40px;text-align:right;line-height:24px;" v-if="chainObj['riqi']">{{chainObj["riqi"]}}</div>
-            <div style="padding: 0px 40px 0px 40px;text-align:center;line-height:24px;">亦来云区块链电子证书
+            <div style="padding: 0px 40px 0px 40px;text-align:right;line-height:24px;" :class='{"ycolor":this.chainObj.type}' v-if="chainObj['riqi']">{{chainObj["riqi"]}}</div>
+            <div style="padding: 0px 40px 0px 40px;text-align:center;line-height:24px;" :class='{"ycolor":this.chainObj.type}'>亦来云区块链电子证书
             </div>
             <div style="width:120px;margin: 0 auto;padding-bottom: 30px">
                 <qrcode :value="qrcode" :options="{ width: 120 }" style="display:block;"></qrcode>
@@ -221,8 +225,8 @@
             muBanIndex: 0,
             curPathArr: [""],
             ganXiePath: [{
-                path: "./images/ganxie_bg.jpg",
-                path1: "./images/ganxie.png",
+                path: "./images/newyear.jpg",
+                path1: "./images/newyear-title.png",
             }],
             juanZengPath: [{
                 path: "./images/jz_bg.png",
