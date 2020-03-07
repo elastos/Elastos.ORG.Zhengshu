@@ -240,13 +240,13 @@
         methods: {
             chakanEla2y(item) {
                 var id = item["id"];
-                item["didUrl"] = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + id;
+                item["didUrl"] = "https://explorer.elaphant.app/history/" + this.did + "/" + id;
                 var eObj = encodeURIComponent(JSON.stringify(item));
                 location.href = "./ela2y-detail.html?chinaObj=" + eObj;
             },
             chakan(item) {
                 var id = item["id"];
-                item["didUrl"] = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + id;
+                item["didUrl"] = "https://explorer.elaphant.app/history/" + this.did + "/" + id;
                 var eObj = encodeURIComponent(JSON.stringify(item));
                 location.href = "./step4.html?chinaObj=" + eObj;
             },
@@ -311,11 +311,7 @@
                 location.href = "./step2.html";
             },
             listAjax() {
-
-                //var url = "https://idchain.elastos.org/did/" + this.did + "/property_history/ela2y";
-                //var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=18210230496&did=imFmcRR4cot9yXqrntwE7nMMaNcYzn7unm&start=0&pageSize=20";
-                // var url = "https://idchain.elastos.org/api/v1/block/properteis/did?did=" + this.did;
-                var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=ela2y" + "&did=" + this.did + "&start=0&pageSize=21";
+                var url = "https://explorer.elaphant.app/api/v1/block/properteis/history?key=ela2y" + "&did=" + this.did + "&start=0&pageSize=21";
                 this.getAjax(url).then((res) => {
                     var res = res || [];
                     this.handle(res);

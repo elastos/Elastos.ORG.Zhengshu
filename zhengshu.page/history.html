@@ -276,7 +276,7 @@
         methods: {
             chakan(item) {
                 var id = item["id"];
-                item["didUrl"] = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + id;
+                item["didUrl"] = "https://explorer.elaphant.app/history/" + this.did + "/" + id;
                 var eObj = encodeURIComponent(JSON.stringify(item));
                 location.href = "./step4.html?chinaObj=" + eObj;
             },
@@ -342,11 +342,7 @@
                 location.href = "./step2.html";
             },
             listAjax() {
-
-                //var url = "https://idchain.elastos.org/did/" + this.did + "/property_history/" + this.phone;
-                //var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=18210230496&did=imFmcRR4cot9yXqrntwE7nMMaNcYzn7unm&start=0&pageSize=20";
-                var url = "https://idchain.elastos.org/api/v1/block/properteis/did?did=" + this.did;
-                //var url = "https://idchain.elastos.org/api/v1/block/properteis/history?key=" + this.phone + "&did=" + this.did + "&start=0&pageSize=20";
+                var url = "https://explorer.elaphant.app/api/v1/block/properteis/did?did=" + this.did;
                 this.getAjax(url).then((res) => {
                     var res = res || [];
                     this.handle(res);
