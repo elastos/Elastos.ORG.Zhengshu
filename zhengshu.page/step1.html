@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>did推广存证</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <style>
+        .top {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            left: 0px;
+            top: 0px;
+            z-index: 2;
+            background: #FF3365;
+        }
+        
+        .top .right {
+            position: absolute;
+            /* width: 140px;*/
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            right: 25px;
+        }
+        
+        .top .right img {
+            vertical-align: middle;
+            margin-top: -9px
+        }
+        
+        .bg {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: url(./images/bg.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .main {
+            position: absolute;
+            width: 260px;
+            height: 56px;
+            line-height: 56px;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            margin-left: -130px;
+            margin-top: -28px;
+            font-size: 16px;
+            background: #1BC48C;
+            color: #FFFFFF;
+        }
+        
+        .choice {
+            position: absolute;
+            width: 240px;
+            height: 220px;
+            background: #FFFFFF;
+            right: 25px;
+            top: 60px;
+            z-index: 3;
+        }
+        
+        .choice ul li {
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: #333333;
+            height: 68px;
+            line-height: 68px;
+        }
+        
+        .xiaoshou {
+            cursor: pointer;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+        
+        .toast {
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            top: 25%;
+            transition: all .5s;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            border-radius: 5px;
+            color: #FFF;
+            background: rgba(17, 17, 17, 0.7);
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="toast" v-show="toastShow">
+            {{toastText}}
+        </div>
+        <div class="top">
+            <div class="right xiaoshou" @click="zhanghu">
+                <img src="./images/pepole.png" />{{phone}}
+            </div>
+        </div>
+        <div class="choice" v-if="isShow">
+            <ul>
+                <li @click="exitDid">我已颁发的证书</li>
+                <li style="border-bottom:1px solid #DDDDDD" @click="createDid">颁发一个新证书</li>
+                <li style="color: #EA1F2B;" @click="logout">安全登出</li>
+            </ul>
+        </div>
+        <div class="bg"></div>
+        <div class="main xiaoshou" @click="create">
+            开始生成区块链证书
+        </div>
+    </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            isShow: false,
+            phone: "",
+            toastShow: false,
+            toastText: '',
+            baseUrl: "https://zhengshu-api.elastos.org",
+            token: "",
+
+        },
+        methods: {
+            toast(str) {
+                var v = this;
+                v.toastText = str
+                v.toastShow = true
+                setTimeout(function() {
+                    v.toastShow = false
+                }, 1500)
+            },
+            doCopy(publickey) {
+                var v = this;
+                this.$copyText(publickey).then(function(e) {
+                    v.toast("复制成功");
+                }, function(e) {})
+            },
+            zhanghu() {
+                this.isShow = !this.isShow;
+            },
+            create() {
+                location.href = "./step2.html";
+            },
+            exitDid() {
+                location.href = "./history.html";
+            },
+            createDid() {
+                location.href = "./step2.html";
+            },
+            logoutAjax() {
+                var url = this.baseUrl + "/api/1/association/logout";
+                this.postAjax(url).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("退出成功");
+                        localStorage.setItem('did.deposit', "");
+                        location.href = "./index.html";
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch(() => {
+                    this.toast("退出成功");
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            postAjax(url) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            logout() {
+                this.logoutAjax();
+            },
+
+        },
+        destroyed() {
+            clearInterval(this.timer);
+        },
+        created: function() {
+            var obj = JSON.parse(localStorage.getItem('did.deposit'));
+            this.phone = obj["phone"];
+            this.token = obj["token"];
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html>

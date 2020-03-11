@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>did推广存证</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style>
+        .top {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            left: 0px;
+            top: 0px;
+            z-index: 99;
+            background: #FF3365;
+        }
+        
+        .top .left {
+            position: absolute;
+            /* width: px; */
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            left: 25px;
+            z-index: 99;
+        }
+        
+        .top .left img {
+            vertical-align: middle;
+            margin-top: -3px;
+        }
+        
+        .top .right {
+            position: absolute;
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            right: 25px;
+            z-index: 99;
+        }
+        
+        .top .right img {
+            vertical-align: middle;
+            margin-top: -9px
+        }
+        
+        .bg {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: url(./images/bg.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .main {
+            position: absolute;
+            width: 500px;
+            height: 420px;
+            text-align: center;
+            left: 50%;
+            margin-top: 130px;
+            /* top: 50%; */
+            margin-left: -250px;
+            /* margin-top: -210px; */
+            font-size: 16px;
+            background: #ffffff;
+            opacity: 0.8;
+        }
+        
+        .main hang {
+            width: 100%;
+        }
+        
+        .main .hang input {
+            width: 180px;
+            padding-left: 10px;
+            height: 35px;
+        }
+        
+        .main .hang textarea {
+            border-radius: 5px;
+            width: 180px;
+            height: 50px;
+            padding-left: 10px;
+            resize: none;
+            vertical-align: middle;
+        }
+        
+        .main .hang span {
+            display: inline-block;
+            font-size: 14px;
+            width: 99px;
+            text-align: right;
+            height: 40px;
+        }
+        
+        .choice {
+            position: absolute;
+            width: 240px;
+            height: 220px;
+            background: #FFFFFF;
+            right: 25px;
+            top: 60px;
+            z-index: 999;
+        }
+        
+        .choice ul li {
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: #333333;
+            height: 68px;
+            line-height: 68px;
+            outline: none;
+        }
+        
+        .xiaoshou {
+            cursor: pointer;
+        }
+        
+        body {
+            background: #E5E5E5;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+        
+        .top1 {
+            top: 60px;
+            width: 100%;
+            position: fixed;
+            height: 42px;
+            line-height: 42px;
+            background: #FFFFFF;
+            z-index: 99;
+        }
+        
+        .top1 .first {
+            font-size: 12px;
+            float: left;
+            text-align: center;
+            width: 50%;
+            color: #333333;
+            background: #FFFFFF;
+            border-top-right-radius: 45px;
+            border-bottom-right-radius: 45px;
+        }
+        
+        .top1 .second {
+            font-size: 12px;
+            float: left;
+            text-align: center;
+            width: 25%;
+            color: #333333;
+            background: #FFFFFF;
+            border-radius: 45px;
+        }
+        
+        .top1 .third {
+            font-size: 12px;
+            float: left;
+            text-align: center;
+            width: 25%;
+            color: #333333;
+            background: #FFFFFF;
+            border-top-left-radius: 45px;
+            border-bottom-left-radius: 45px;
+        }
+        
+        .top1 .status {
+            color: #FBFCFD;
+            background: #1BC48C;
+        }
+        
+        .hang1 {
+            margin-top: 0px;
+        }
+        
+        .hang1 .left {
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            margin-right: 5px;
+            line-height: 34px;
+            background: #CCCCCC;
+            color: #666666;
+        }
+        
+        .hang1 .middle {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #FF3365;
+            color: #FF3365;
+            cursor: pointer;
+        }
+        
+        .hang1 .right {
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            margin-left: 5px;
+            background: #FF3365;
+            color: #ffffff;
+        }
+        
+        .main1 {
+            position: relative;
+            margin-top: 120px;
+        }
+        
+        .main1 ul li {
+            float: left;
+            font-size: 16px;
+            width: 33.333%;
+            text-align: center;
+            color: #101010;
+            padding: 10px 0px;
+            cursor: pointer;
+        }
+        
+        .statusBorder {
+            border-bottom: 3px solid #FF3365;
+        }
+        
+        .main1 .second {
+            width: 303px;
+            margin: 0 auto;
+        }
+        
+        .main1 .third {
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .main1 .third .left {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #666666;
+            color: #666666;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .main1 .third .middle {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #FF3365;
+            color: #FF3365;
+            cursor: pointer;
+        }
+        
+        .main1 .third .right {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            background: #FF3365;
+            color: #ffffff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .toast {
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            top: 25%;
+            transition: all .5s;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            border-radius: 5px;
+            color: #FFF;
+            background: rgba(17, 17, 17, 0.7);
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="toast" v-show="toastShow">
+            {{toastText}}
+        </div>
+        <div class="top">
+            <div class="left xiaoshou" @click="zhuye">
+                <img src="./images/zhuye.png" /> 主页
+            </div>
+            <div class="right xiaoshou" @click="zhanghu">
+                <img src="./images/pepole.png" /> {{phone}}
+            </div>
+        </div>
+        <div class="choice" v-if="isShow">
+            <ul>
+                <li @click="exitDid">我已颁发的证书</li>
+                <li style="border-bottom:1px solid #DDDDDD" @click="createDid">颁发一个新证书</li>
+                <li style="color: #EA1F2B;" @click="logout">安全登出</li>
+            </ul>
+        </div>
+        <div class="top1">
+            <div class="first xiaoshou" @click="clickIndex(0)" :class="{status:curIndex === 0}">选择模板</div>
+            <div class="second  xiaoshou" @click="clickIndex(1)" :class="{status:curIndex === 1}">输入颁发人和接收人信息</div>
+            <div class="third  xiaoshou" @click="clickIndex(2)" :class="{status:curIndex === 2}">下载证书</div>
+        </div>
+
+        <div class="main1" v-if="curIndex === 0">
+            <div class="first">
+                <ul>
+                    <li @click="clickmuBanIndex(0)" :class="{statusBorder:muBanIndex === 0}">感谢信</li>
+                    <li @click="clickmuBanIndex(1)" :class="{statusBorder:muBanIndex === 1}">捐赠证明</li>
+                    <li @click="clickmuBanIndex(2)" :class="{statusBorder:muBanIndex === 2}">猫王国</li>
+                </ul>
+            </div>
+            <div style="clear:both;padding-top: 10px;"></div>
+            <div style="text-align: center" v-if="curPathArr.length===0">暂无模板</div>
+            <div class="second" v-if="curPathArr.length>0">
+                <div id="myCarousel" class="carousel" data-ride="carousel" data-interval="500">
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item" v-for="(item,index) in  curPathArr" :class="{
+                                                'active':index=== 0
+                                              }">
+                            <img :src="item.path" style="height:400px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="third" v-if="curPathArr.length>0">
+                <!-- <span class="left" @click="shangpage">上一步</span><span class="middle" @click="yulan()">预览证书</span><span class="right" @click="shengcheng()">生成证书</span> -->
+                <span class="left" @click="cancle">取消</span> <span class="right" @click="xiapage">下一步</span>
+            </div>
+        </div>
+
+        <div class="main" v-if="curIndex === 1" :style="styleObject">
+            <div style="padding-top:30px;"></div>
+            <div class="title">生成区块链证书</div>
+            <div style="padding-top:30px;"></div>
+            <div class="hang">
+                <span>证书标题：</span><input placeholder="字不超过10个字" v-model="chainObj.title" />
+            </div>
+            <div class="hang">
+                <span>称呼：</span><input placeholder="字不超过10个字" v-model="chainObj.nicheng" />
+            </div>
+            <div class="hang">
+                <span>日期：</span><input placeholder="年月日" type="date" v-model="chainObj.riqi" />
+            </div>
+            <div class="hang">
+                <span>署名：</span><input placeholder="字不超过10个字" v-model="chainObj.shuming" />
+            </div>
+            <div class="hang">
+                <span>正文内容：</span><textarea v-model="chainObj.mcontent"></textarea>
+            </div>
+            <div class="hang">
+                <span>Property Name:</span><input placeholder="" v-model="chainObj.pkey" />
+            </div>
+            <div class="hang1 xiaoshou">
+                <!-- <span class="left" @click="cancle">取消</span> <span class="right" @click="xiapage">下一步</span> -->
+                <span class="left" @click="shangpage">上一步</span><span class="middle" @click="yulan()">预览证书</span><span class="right" @click="shengcheng()">生成证书</span>
+            </div>
+        </div>
+
+        <!-- <div class="main" v-if="curIndex === 2">
+            3
+        </div> -->
+    </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            isShow: false,
+            curIndex: 0,
+            styleObject: {
+                width: "",
+                "margin-left": "",
+            },
+            muBanIndex: 0,
+            curPathArr: [],
+            ganXiePath: [{
+                path: "./images/681562760272.png"
+                    //path: "./images/1578838405712.png"
+            }],
+            juanZengPath: [{
+                path: "./images/jz.jpg"
+            }],
+            xiaoYouPath: [{
+                path: "./images/mwg.jpg"
+            }],
+            phone: "",
+            chainObj: {
+                "title": "",
+                "nicheng": "",
+                "riqi": "",
+                "shuming": "",
+                "mcontent": "",
+                "pkey": ""
+            },
+            baseUrl: "https://zhengshu-api.elastos.org",
+            toastShow: false,
+            toastText: '',
+            token: "",
+            pkey: ""
+        },
+        methods: {
+            toast(str) {
+                var v = this;
+                v.toastText = str
+                v.toastShow = true
+                setTimeout(function() {
+                    v.toastShow = false
+                }, 1500)
+            },
+            dateFormat(date, sFormat) {
+                let time = {
+                    Year: 0,
+                    TYear: '0',
+                    Month: 0,
+                    TMonth: '0',
+                    Day: 0,
+                    TDay: '0',
+                    Hour: 0,
+                    THour: '0',
+                    hour: 0,
+                    Thour: '0',
+                    Minute: 0,
+                    TMinute: '0',
+                    Second: 0,
+                    TSecond: '0',
+                    Millisecond: 0
+                };
+                time.Year = date.getFullYear();
+                time.TYear = String(time.Year).substr(2);
+                time.Month = date.getMonth() + 1;
+                time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
+                time.Day = date.getDate();
+                time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
+                time.Hour = date.getHours();
+                time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
+                time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
+                time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
+                time.Minute = date.getMinutes();
+                time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
+                time.Second = date.getSeconds();
+                time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
+                time.Millisecond = date.getMilliseconds();
+
+                return sFormat.replace(/yyyy/ig, String(time.Year))
+                    .replace(/yyy/ig, String(time.Year))
+                    .replace(/yy/ig, time.TYear)
+                    .replace(/y/ig, time.TYear)
+                    .replace(/MM/g, time.TMonth)
+                    .replace(/M/g, String(time.Month))
+                    .replace(/dd/ig, time.TDay)
+                    .replace(/d/ig, String(time.Day))
+                    .replace(/HH/g, time.THour)
+                    .replace(/H/g, String(time.Hour))
+                    .replace(/hh/g, time.Thour)
+                    .replace(/h/g, String(time.hour))
+                    .replace(/mm/g, time.TMinute)
+                    .replace(/m/g, String(time.Minute))
+                    .replace(/ss/ig, time.TSecond)
+                    .replace(/s/ig, String(time.Second))
+                    .replace(/fff/ig, String(time.Millisecond))
+            },
+            xiapage() {
+
+                //if (this.checkParm()) {
+                this.curIndex = 1;
+                //}
+                if (this.muBanIndex === 0) {
+                    this.chainObj.type = "感谢信";
+                } else if (this.muBanIndex === 1) {
+                    this.chainObj.type = "捐赠证明";
+                } else if (this.muBanIndex === 2) {
+                    this.chainObj.type = "猫王国";
+                }
+            },
+            cancle() {
+                location.href = "./step1.html";
+            },
+            shangpage() {
+                //location.href = "./step1.html";
+                this.curIndex = 0;
+            },
+            shengcheng() {
+                //if (this.checkParm()) {
+                //location.href = "./step4.html";
+                this.scAjax();
+                //}
+            },
+            scAjax() {
+                var url = this.baseUrl + "/api/1/association/certification";
+                var id = this.chainObj.pkey || "";
+                if (id === "") {
+                    id = (new Date()).getTime().toString();
+                }
+                if (this.muBanIndex === 0) {
+                    this.chainObj.type = "感谢信";
+                } else if (this.muBanIndex === 1) {
+                    this.chainObj.type = "捐赠证明";
+                } else if (this.muBanIndex === 2) {
+                    this.chainObj.type = "猫王国";
+                }
+                var parms = {
+                    "name": id,
+                    "content": JSON.stringify(this.chainObj)
+                }
+
+                this.postAjax1(url, parms).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("上链已发送");
+                        var didUrl = res.data.did_explorer_url;
+                        this.chainObj["didUrl"] = didUrl;
+                        var eObj = encodeURIComponent(JSON.stringify(this.chainObj));
+                        location.href = "./step4.html?chinaObj=" + eObj;
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch((err) => {
+                    alert(JSON.stringify(err));
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            checkParm() {
+                if (this.chainObj.title === "") {
+                    this.toast("请输入标题");
+                    return false;
+                }
+
+                if (this.chainObj.nicheng === "") {
+                    this.toast("请输入称呼");
+                    return false;
+                }
+
+                if (this.chainObj.riqi === "") {
+                    this.toast("请选择日期");
+                    return false;
+                }
+
+                if (this.chainObj.shuming === "") {
+                    this.toast("请输入署名");
+                    return false;
+                }
+
+                if (this.chainObj.mcontent === "") {
+                    this.toast("请输入正文内容");
+                    return false;
+                }
+                return true;
+            },
+            yulan() {
+                if (this.muBanIndex === 0) {
+                    this.chainObj.type = "感谢信";
+                } else if (this.muBanIndex === 1) {
+                    this.chainObj.type = "捐赠证明";
+                } else if (this.muBanIndex === 2) {
+                    this.chainObj.type = "猫王国";
+                }
+                var eObj = encodeURIComponent(JSON.stringify(this.chainObj));
+                location.href = "./step3.html?chinaObj=" + eObj;
+            },
+            clickmuBanIndex(index) {
+                if (index === 0) {
+                    this.curPathArr = this.ganXiePath;
+                } else if (index === 1) {
+                    this.curPathArr = this.juanZengPath;
+                } else if (index === 2) {
+                    this.curPathArr = this.xiaoYouPath;
+                }
+
+                this.muBanIndex = index;
+            },
+            clickIndex(index) {
+                //if (this.checkParm) {
+                if (index === 2) {
+                    this.scAjax();
+                    return;
+                }
+                this.curIndex = index;
+                //}
+            },
+            zhuye() {
+                location.href = "./step1.html";
+            },
+            zhanghu() {
+                this.isShow = !this.isShow;
+            },
+            exitDid() {
+                location.href = "./history.html";
+            },
+            createDid() {
+                location.href = "./step2.html";
+            },
+            logoutAjax() {
+                var url = this.baseUrl + "/api/1/association/logout";
+                this.postAjax(url).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("退出成功");
+                        localStorage.setItem('did.deposit', "");
+                        location.href = "./index.html";
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch(() => {
+                    this.toast("退出成功");
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            postAjax(url) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            postAjax1(url, parms) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        data: JSON.stringify(parms),
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            logout() {
+                this.logoutAjax();
+            },
+            uuid(len, radix) {
+                var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+                var uuid = [],
+                    i;
+                radix = radix || chars.length;
+
+                if (len) {
+                    // Compact form
+                    for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
+                } else {
+                    // rfc4122, version 4 form
+                    var r;
+
+                    // rfc4122 requires these characters
+                    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+                    uuid[14] = '4';
+
+                    // Fill in random data.  At i==19 set the high bits of clock sequence as
+                    // per rfc4122, sec. 4.1.5
+                    for (i = 0; i < 36; i++) {
+                        if (!uuid[i]) {
+                            r = 0 | Math.random() * 16;
+                            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                        }
+                    }
+                }
+
+                return uuid.join('');
+            },
+            getUrlParam: function(name) {
+                //正则表达式过滤
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                //正则规则
+                var r = window.location.search.substr(1).match(reg);
+
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            }
+        },
+        destroyed() {
+
+        },
+        created: function() {
+            this.swdith = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (this.swdith < 500) {
+                var width = this.swdith - 20;
+                this.styleObject.width = width + 'px';
+                this.styleObject["margin-left"] = -(width / 2) + 'px';
+            }
+            var obj = JSON.parse(localStorage.getItem('did.deposit'));
+            this.phone = obj["phone"];
+            this.token = obj["token"];
+            var str = this.getUrlParam("chinaObj") || "";
+            if (str === "") {
+                this.curIndex = 0;
+                this.curPathArr = this.ganXiePath;
+                this.chainObj.riqi = this.dateFormat(new Date(), 'yyyy-MM-dd');
+            } else {
+                this.curIndex = 1;
+                this.chainObj = JSON.parse(decodeURIComponent(str));
+                if (this.chainObj.type === "感谢信") {
+                    this.muBanIndex = 0;
+                    this.curPathArr = this.ganXiePath;
+                } else if (this.chainObj.type === "捐赠证明") {
+                    this.muBanIndex = 1;
+                    this.curPathArr = this.juanZengPath;
+                } else if (this.chainObj.type === "猫王国") {
+                    this.muBanIndex = 2;
+                    this.curPathArr = this.xiaoYouPath;
+                }
+
+            }
+
+            //this.chainObj.riqi = this.dateFormat(new Date(), 'yyyy-MM-dd');
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html

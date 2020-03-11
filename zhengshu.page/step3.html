@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>did推广存证</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/vue-qrcode.min.js"></script>
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script>
+        Vue.component(VueQrcode.name, VueQrcode);
+    </script>
+    <style>
+        .top {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            left: 0px;
+            top: 0px;
+            z-index: 99;
+            background: #FF3365;
+        }
+        
+        .top .left {
+            position: absolute;
+            /* width: px; */
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            left: 25px;
+            z-index: 99;
+        }
+        
+        .top .left img {
+            vertical-align: middle;
+            margin-top: -3px;
+        }
+        
+        .top .right {
+            position: absolute;
+            /* width: 140px; */
+            text-align: right;
+            font-size: 18px;
+            color: #ffffff;
+            right: 25px;
+            z-index: 99;
+        }
+        
+        .top .right img {
+            vertical-align: middle;
+            margin-top: -9px
+        }
+        
+        .bg {
+            position: fixed;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: url(./images/bg.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .choice {
+            position: absolute;
+            width: 240px;
+            height: 220px;
+            background: #FFFFFF;
+            right: 25px;
+            top: 60px;
+            z-index: 3;
+        }
+        
+        .choice ul li {
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: #333333;
+            height: 68px;
+            line-height: 68px;
+            outline: none;
+        }
+        
+        .xiaoshou {
+            cursor: pointer;
+        }
+        
+        body {
+            background: #E5E5E5;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+        
+        .first {
+            width: 320px;
+            /* height: 799px; */
+            margin: 0 auto;
+            margin-top: 95px;
+            text-align: center;
+            background: url(./images/ganxie_bg.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .second {
+            width: 100%;
+            padding: 10px 0px;
+            text-align: center;
+        }
+        
+        .second .left {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #666666;
+            color: #666666;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .second .right {
+            text-align: center;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            line-height: 34px;
+            background: #FF3365;
+            color: #ffffff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .toast {
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            top: 25%;
+            transition: all .5s;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            border-radius: 5px;
+            color: #FFF;
+            background: rgba(17, 17, 17, 0.7);
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            width: 200px;
+        }
+        
+        .ycolor {
+            color: #e6c76a;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="toast" v-show="toastShow">
+            {{toastText}}
+        </div>
+        <div class="top">
+            <div class="left xiaoshou" @click="zhuye">
+                <img src="./images/zhuye.png" /> 主页
+            </div>
+            <div class="right xiaoshou" @click="zhanghu">
+                <img src="./images/pepole.png" /> {{phone}}
+            </div>
+        </div>
+        <div class="choice" v-if="isShow">
+            <ul>
+                <li @click="exitDid">我已颁发的证书</li>
+                <li style="border-bottom:1px solid #DDDDDD" @click="createDid">颁发一个新证书</li>
+                <li style="color: #EA1F2B;" @click="logout">安全登出</li>
+            </ul>
+        </div>
+        <div class="first" :style="{'background-image': 'url('+ curPathArr['0'].path + ')'} ">
+            <div style="padding: 130px 0px 20px 0px">
+                <img v-if="(this.chainObj.title === '感谢信') || (this.chainObj.title === '捐赠证明') ||  (this.chainObj.type === '猫王国')" :src="curPathArr['0'].path1" style="width: 206px;" />
+                <p style="font-size: 24px;font-weight:bold" v-else>{{chainObj.title}}</p>
+            </div>
+            <div style="padding: 10px 40px 0px 40px;text-align: left" v-if="chainObj['nicheng']">{{chainObj["nicheng"]}}:</div>
+            <div style="padding: 5px 40px 0px 40px;text-align:left;line-height:24px;;word-break: break-all;" v-if="chainObj['mcontent']">{{chainObj["mcontent"]}}
+            </div>
+            <div style="padding: 10px 40px 0px 40px;text-align:right;line-height:24px;" v-if="chainObj['shuming']">{{chainObj["shuming"]}}
+            </div>
+            <div style="padding: 0px 40px 0px 40px;text-align:right;line-height:24px;" v-if="chainObj['riqi']">{{chainObj["riqi"]}}</div>
+            <div style="padding: 0px 40px 0px 40px;text-align:center;line-height:24px;">亦来云区块链电子证书
+            </div>
+            <div style="width:120px;margin: 0 auto;padding-bottom: 30px">
+                <qrcode :value="qrcode" :options="{ width: 120 }" style="display:block;"></qrcode>
+            </div>
+        </div>
+        <div style="margin-top:5px;text-align: center;color:#666666;font-size: 14px">预览生成</div>
+        <div class="second">
+            <span class="left" @click="shangpage">上一页</span><span class="right" @click="shengcheng">生成证书</span>
+        </div>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            toastShow: false,
+            toastText: '',
+            isShow: false,
+            curIndex: 1,
+            styleObject: {
+                width: "",
+                "margin-left": "",
+            },
+            muBanIndex: 0,
+            curPathArr: [""],
+            ganXiePath: [{
+                path: "./images/ganxie_bg.jpg",
+                path1: "./images/ganxie.png",
+            }],
+            juanZengPath: [{
+                path: "./images/jz_bg.png",
+                path1: "./images/jz_title.png",
+            }],
+            xiaoYouPath: [{
+                path: "./images/mwg_bg.jpg",
+                path1: "./images/mwg_title.png",
+            }],
+            phone: "",
+            qrcode: "ssss",
+            baseUrl: "https://zhengshu-api.elastos.org",
+            chainObj: {},
+            token: "",
+            chainStr: "",
+        },
+        methods: {
+            uuid(len, radix) {
+                var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+                var uuid = [],
+                    i;
+                radix = radix || chars.length;
+
+                if (len) {
+                    // Compact form
+                    for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
+                } else {
+                    // rfc4122, version 4 form
+                    var r;
+
+                    // rfc4122 requires these characters
+                    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+                    uuid[14] = '4';
+
+                    // Fill in random data.  At i==19 set the high bits of clock sequence as
+                    // per rfc4122, sec. 4.1.5
+                    for (i = 0; i < 36; i++) {
+                        if (!uuid[i]) {
+                            r = 0 | Math.random() * 16;
+                            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                        }
+                    }
+                }
+
+                return uuid.join('');
+            },
+            toast(str) {
+                var v = this;
+                v.toastText = str
+                v.toastShow = true
+                setTimeout(function() {
+                    v.toastShow = false
+                }, 1500)
+            },
+            scAjax() {
+                var url = this.baseUrl + "/api/1/association/certification";
+                var id = this.chainObj.pkey || "";
+                if (id === "") {
+                    id = (new Date()).getTime().toString();
+                }
+                var parms = {
+                    "name": id,
+                    "content": JSON.stringify(this.chainObj)
+                }
+
+                this.postAjax1(url, parms).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("上链已发送");
+                        var didUrl = res.data.did_explorer_url;
+                        this.chainObj["didUrl"] = didUrl;
+                        var eObj = encodeURIComponent(JSON.stringify(this.chainObj));
+                        location.href = "./step4.html?chinaObj=" + eObj;
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch((err) => {
+                    alert(JSON.stringify(err));
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            getUrlParam: function(name) {
+                //正则表达式过滤
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                //正则规则
+                var r = window.location.search.substr(1).match(reg);
+
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            },
+            shangpage() {
+                location.href = "./step2.html?chinaObj=" + this.chainStr;
+            },
+            shengcheng() {
+                this.scAjax();
+            },
+            zhuye() {
+                location.href = "./step1.html";
+            },
+            zhanghu() {
+                this.isShow = !this.isShow;
+            },
+            exitDid() {
+                location.href = "./history.html";
+            },
+            createDid() {
+                location.href = "./step2.html";
+            },
+            logoutAjax() {
+                var url = this.baseUrl + "/api/1/association/logout";
+                this.postAjax(url).then((res) => {
+                    if (res.state === 200) {
+                        this.toast("退出成功");
+                        localStorage.setItem('did.deposit', "");
+                        location.href = "./index.html";
+                    } else {
+                        this.toast(res.msg);
+                    }
+                }).catch(() => {
+                    this.toast("退出成功");
+                    localStorage.setItem('did.deposit', "");
+                    location.href = "./index.html";
+                });
+            },
+            postAjax1(url, parms) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        type: 'POST',
+                        data: JSON.stringify(parms),
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            postAjax(url, parms) {
+                return new Promise((resovle, reject) => {
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        headers: {
+                            'authorization': this.token,
+                        },
+                        contentType: 'application/json',
+                        type: 'POST',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) { //成功回调函数
+                            resovle(data);
+                        },
+                        error: function(err) { //失败回调函数
+                            reject(err);
+                        }
+                    });
+                });
+            },
+            logout() {
+                this.logoutAjax();
+            }
+
+        },
+        destroyed() {
+
+        },
+        created: function() {
+            var obj = JSON.parse(localStorage.getItem('did.deposit'));
+            this.phone = obj["phone"];
+            this.token = obj["token"];
+            var str = this.getUrlParam("chinaObj");
+            this.chainStr = str;
+            this.chainObj = JSON.parse(decodeURIComponent(str));
+            if (this.chainObj.type === "感谢信") {
+                this.curPathArr = this.ganXiePath;
+            } else if (this.chainObj.type === "捐赠证明") {
+                this.curPathArr = this.juanZengPath;
+            } else if (this.chainObj.type === "猫王国") {
+                this.curPathArr = this.xiaoYouPath;
+            }
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html>
