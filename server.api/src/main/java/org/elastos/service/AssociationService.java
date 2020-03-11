@@ -66,8 +66,8 @@ public class AssociationService {
         }
 
         Map<String, String> data = new HashMap<>();
-        //https://idchain.elastos.org/did/igcBAAKG28NDdTfyWDtpH33wevJrKuHay1/property_history/SNH48%E5%86%AF%E8%96%AA%E6%9C%B5
-        String didExplorerUrl = elaServiceConfiguration.getDidExplorerUrl() + "/did/" + did + "/property_history/";
+        // https://explorer.elaphant.app/history/igcBAAKG28NDdTfyWDtpH33wevJrKuHay1/SNH48%E5%86%AF%E8%96%AA%E6%9C%B5
+        String didExplorerUrl = elaServiceConfiguration.getDidExplorerUrl() + "/history/" + did + "/";
         try {
             didExplorerUrl += java.net.URLEncoder.encode(name, "UTF-8");
         } catch (UnsupportedEncodingException e) {
