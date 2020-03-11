@@ -1,6 +1,9 @@
 package org.elastos.util;
 
 import org.elastos.constants.Auth;
+import org.elastos.exception.ElastosServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
