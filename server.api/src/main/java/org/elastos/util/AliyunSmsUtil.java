@@ -11,6 +11,8 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import org.elastos.conf.SmsConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,10 +28,14 @@ public class AliyunSmsUtil {
 //    static private final String signName = "亦来云";
 //    static private final String templateCode = "SMS_172013573";
 
+    private static Logger logger = LoggerFactory.getLogger(AliyunSmsUtil.class);
+
     @Resource
     private SmsConfiguration smsConfiguration;
 
     public boolean sendSms(String phone, String code) {
+        logger.debug(smsConfiguration.toString());
+
         if (null == phone) {
             System.out.println("Err AliyunSmsUtil sendSms phone number is null.");
             return false;

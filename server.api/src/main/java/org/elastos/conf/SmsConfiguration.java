@@ -48,4 +48,14 @@ public class SmsConfiguration {
     public void setTemplateCode(String templateCode) {
         this.templateCode = templateCode;
     }
+
+    @Override
+    public String toString() {
+        return "SmsConfiguration{" +
+                "accessKeyId='" + accessKeyId + '\'' +
+                ", accessKeySecret='" + accessKeySecret + '\'' +
+                ", signName='" + signName + '\'' +
+                ", templateCode='" + templateCode + '\'' +
+                '}';
+    }
 }
