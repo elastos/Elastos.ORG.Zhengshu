@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,9 @@ public class LoginService {
     @Autowired
     CheckPhoneUtil checkPhoneUtil;
 
+    @Resource
+    private AliyunSmsUtil aliyunSmsUtil;
+
     public String phoneCheck(HttpSession session, String phone) {
         if (StringUtils.isBlank(phone)) {
             logger.error("phoneCheck parameter has null");
@@ -53,7 +57,7 @@ public class LoginService {
         }
 
         String code = checkPhoneUtil.createCode(phone);
-        if(!AliyunSmsUtil.sendSms(phone,code)){
+        if(!aliyunSmsUtil.sendSms(phone,code)){
             return new ServerResponse().setState(RetCode.ERROR_PARAMETER).setMsg("网络异常,请稍候再试").toJsonString();
         }
 

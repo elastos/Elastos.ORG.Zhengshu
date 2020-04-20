@@ -10,26 +10,33 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import org.elastos.conf.SmsConfiguration;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 
+@Service
 public class AliyunSmsUtil {
 
     // 此处需要替换成开发者自己的信息(在阿里云访问控制台寻找)
-    static private final String accessKeyId = "LTAIx2t2btvErTDy";
-    static private final String accessKeySecret = "3q2JqvAECUxXbWEGKDliEul5XezZqm";
-    static private final String signName = "亦来云";
-    static private final String templateCode = "SMS_172013573";
+//    static private final String accessKeyId = "";
+//    static private final String accessKeySecret = "";
+//    static private final String signName = "亦来云";
+//    static private final String templateCode = "SMS_172013573";
 
-    public static boolean sendSms(String phone, String code) {
+    @Resource
+    private SmsConfiguration smsConfiguration;
+
+    public boolean sendSms(String phone, String code) {
         if (null == phone) {
             System.out.println("Err AliyunSmsUtil sendSms phone number is null.");
             return false;
         }
         boolean ret = true;
 
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", smsConfiguration.getAccessKeyId(), smsConfiguration.getAccessKeySecret());
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -39,8 +46,8 @@ public class AliyunSmsUtil {
         request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", phone);
-        request.putQueryParameter("SignName", signName);
-        request.putQueryParameter("TemplateCode", templateCode);
+        request.putQueryParameter("SignName", smsConfiguration.getSignName());
+        request.putQueryParameter("TemplateCode", smsConfiguration.getTemplateCode());
         request.putQueryParameter("TemplateParam","{\"code\":\""+ code + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
